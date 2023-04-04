@@ -29,7 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.mysql.fabric.jdbc.FabricMySQLConnection;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLConnection;
 
 /**
  * Demonstrate working with employee data in MySQL Fabric with Connector/J and the JDBC APIs.
@@ -46,7 +46,7 @@ public class EmployeesJdbc {
         String baseUrl = "jdbc:mysql:fabric://" + hostname + ":" + Integer.valueOf(port) + "/";
 
         // Load the driver if running under Java 5
-        if (!com.mysql.jdbc.Util.isJdbc4()) {
+        if (!com.mysql.mongo.jdbc.Util.isJdbc4()) {
             Class.forName("com.mysql.fabric.jdbc.FabricMySQLDriver");
         }
 

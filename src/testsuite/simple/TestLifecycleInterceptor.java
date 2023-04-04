@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.util.Properties;
 
-import com.mysql.jdbc.ConnectionLifecycleInterceptor;
+import com.mysql.mongo.jdbc.ConnectionLifecycleInterceptor;
 
 public class TestLifecycleInterceptor implements ConnectionLifecycleInterceptor {
     static int transactionsBegun = 0;
@@ -69,7 +69,7 @@ public class TestLifecycleInterceptor implements ConnectionLifecycleInterceptor 
     public void destroy() {
     }
 
-    public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+    public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
     }
 
 }

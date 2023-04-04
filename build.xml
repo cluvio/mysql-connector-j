@@ -159,7 +159,7 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
     <property name="major_version" value="5" />
     <property name="minor_version" value="1" />
     <property name="subminor_version" value="49" />
-    <property name="version_status" value="" />
+    <property name="version_status" value="-cluvio" />
 
     <property name="version" value="${major_version}.${minor_version}.${subminor_version}${version_status}" />
     <property name="prodName" value="mysql-connector-java" />
@@ -511,7 +511,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
     <!-- Add commercial license configuration class (Build). -->
     <target name="-init-filter-license" depends="-extra-libs-check, -init-copy" if="com.mysql.jdbc.filterLicense">
         <copy file="${com.mysql.jdbc.extra.libs}/CommercialLicenseConfiguration.notjava"
-              toFile="${buildDir}/${fullProdName}/com/mysql/jdbc/LicenseConfiguration.java"
+              toFile="${buildDir}/${fullProdName}/com/mysql/mongo/jdbc/LicenseConfiguration.java"
               overwrite="true" />
     </target>
 
@@ -519,7 +519,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
     <!-- Add no-crypto export control class (Build). -->
     <target name="-init-no-crypto" depends="-extra-libs-check, -init-copy" if="com.mysql.jdbc.noCryptoBuild">
         <copy file="${com.mysql.jdbc.extra.libs}/ExportControlledNoCrypto.notjava"
-              toFile="${buildDir}/${fullProdName}/com/mysql/jdbc/ExportControlled.java"
+            toFile="${buildDir}/${fullProdName}/com/mysql/mongo/jdbc/ExportControlled.java"
               overwrite="true" />
     </target>
 
@@ -527,7 +527,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
     <!-- Copy commercial license configuration class (Package). -->
     <target name="-copy-filter-license" depends="-extra-libs-check, -init-copy" if="com.mysql.jdbc.filterLicense">
         <copy file="${com.mysql.jdbc.extra.libs}/CommercialLicenseConfiguration.notjava"
-              toFile="${packageDest}/src/com/mysql/jdbc/LicenseConfiguration.java"
+            toFile="${packageDest}/src/com/mysql/mongo/jdbc/LicenseConfiguration.java"
               overwrite="true" />
     </target>
 
@@ -535,7 +535,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
     <!-- Copy no-crypto export control class (Package). -->
     <target name="-copy-no-crypto" depends="-extra-libs-check, -init-copy" if="com.mysql.jdbc.noCryptoBuild">
         <copy file="${com.mysql.jdbc.extra.libs}/ExportControlledNoCrypto.notjava"
-              toFile="${packageDest}/src/com/mysql/jdbc/ExportControlled.java"
+            toFile="${packageDest}/src/com/mysql/mongo/jdbc/ExportControlled.java"
               overwrite="true" />
     </target>
 
@@ -622,7 +622,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <!-- JDBC 4+ support of service provider mechanism. -->
         <mkdir dir="${buildDir}/${fullProdName}/META-INF/services/" />
         <echo file="${buildDir}/${fullProdName}/META-INF/services/java.sql.Driver"
-              message="com.mysql.jdbc.Driver${line.separator}com.mysql.fabric.jdbc.FabricMySQLDriver" />
+              message="com.mysql.mongo.jdbc.Driver${line.separator}com.mysql.mongo.fabric.jdbc.FabricMySQLDriver" />
 
         <property name="osgid-version" value="${major_version}.${minor_version}.${subminor_version}" />
 
@@ -650,7 +650,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <property name="integration-exports"
                   value="com.mysql.jdbc.integration.c3p0;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mchange.v2.c3p0&quot;,com.mysql.jdbc.integration.jboss;version=&quot;${osgid-version}&quot;;uses:=&quot;org.jboss.resource.adapter.jdbc,org.jboss.resource.adapter.jdbc.vendor&quot;" />
         <property name="configs-exports" value="com.mysql.jdbc.configs;version=&quot;${osgid-version}&quot;" />
-        <property name="legacy-exports" value="org.gjt.mm.mysql;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.jdbc&quot;" />
+        <property name="legacy-exports" value="org.gjt.mm.mysql.mongo;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.jdbc&quot;" />
         <property name="fabric-exports"
                   value="com.mysql.fabric;com.mysql.fabric.hibernate;com.mysql.fabric.jdbc;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.jdbc,javax.xml.datatype;org.hibernate;org.hibernate.cfg;org.hibernate.service;org.hibernate.service.jdbc.connections.spi&quot;" />
 
@@ -864,12 +864,12 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                target="1.5">
             <include name="**/*.java" />
             <exclude name="testsuite/**" />
-            <exclude name="com/mysql/jdbc/integration/**" />
-            <exclude name="com/mysql/jdbc/log/Log4JLogger.java" />
+            <exclude name="com/mysql/mongo/jdbc/integration/**" />
+            <exclude name="com/mysql/mongo/jdbc/log/Log4JLogger.java" />
             <exclude name="**/JDBC4*.java" />
             <exclude name="**/FabricMultiTenantConnectionProvider.java" />
             <exclude name="**/HibernateFabric.java" />
-            <exclude name="com/mysql/jdbc/exceptions/jdbc4/*" />
+            <exclude name="com/mysql/mongo/jdbc/exceptions/jdbc4/*" />
             <classpath refid="project.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
@@ -896,7 +896,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <include name="**/HibernateFabric.java" />
             <include name="**/JDBC4*.java" />
             <exclude name="**/JDBC42*.java" />
-            <include name="com/mysql/jdbc/exceptions/jdbc4/*" />
+            <include name="com/mysql/jdbc/mongo/exceptions/jdbc4/*" />
             <classpath refid="project.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
@@ -999,7 +999,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                includeantruntime="false"
                source="1.5"
                target="1.5">
-            <include name="com/mysql/jdbc/integration/c3p0/**" />
+            <include name="com/mysql/mongo/jdbc/integration/c3p0/**" />
             <classpath refid="project.build.classpath" />
         </javac>
     </target>
@@ -1020,7 +1020,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                includeantruntime="false"
                source="1.5"
                target="1.5">
-            <include name="com/mysql/jdbc/integration/jboss/**" />
+            <include name="com/mysql/mongo/jdbc/integration/jboss/**" />
             <classpath refid="project.build.classpath" />
         </javac>
     </target>
@@ -1041,7 +1041,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                includeantruntime="false"
                source="1.5"
                target="1.5">
-            <include name="com/mysql/jdbc/log/Log4JLogger.java" />
+            <include name="com/mysql/mongo/jdbc/log/Log4JLogger.java" />
             <classpath refid="project.build.classpath" />
         </javac>
     </target>

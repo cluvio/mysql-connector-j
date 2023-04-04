@@ -23,7 +23,7 @@
 
 package testsuite.simple;
 
-import com.mysql.jdbc.MiniAdmin;
+import com.mysql.mongo.jdbc.MiniAdmin;
 
 import testsuite.BaseTestCase;
 
@@ -34,7 +34,7 @@ public class MiniAdminTest extends BaseTestCase {
     /**
      * The system property that must exist to run the shutdown test
      */
-    private static final String SHUTDOWN_PROP = "com.mysql.jdbc.testsuite.MiniAdminTest.runShutdown";
+    private static final String SHUTDOWN_PROP = "com.mysql.mongo.jdbc.testsuite.MiniAdminTest.runShutdown";
 
     /**
      * Creates a new test case

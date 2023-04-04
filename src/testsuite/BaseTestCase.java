@@ -44,13 +44,13 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import com.mysql.jdbc.ConnectionImpl;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.ReplicationConnection;
-import com.mysql.jdbc.ReplicationDriver;
-import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.Util;
+import com.mysql.mongo.jdbc.ConnectionImpl;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.ReplicationConnection;
+import com.mysql.mongo.jdbc.ReplicationDriver;
+import com.mysql.mongo.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.Util;
 
 import junit.framework.TestCase;
 
@@ -59,9 +59,9 @@ import junit.framework.TestCase;
  */
 public abstract class BaseTestCase extends TestCase {
 
-    private final static String ADMIN_CONNECTION_PROPERTY_NAME = "com.mysql.jdbc.testsuite.admin-url";
+    private final static String ADMIN_CONNECTION_PROPERTY_NAME = "com.mysql.mongo.jdbc.testsuite.admin-url";
 
-    private final static String NO_MULTI_HOST_PROPERTY_NAME = "com.mysql.jdbc.testsuite.no-multi-hosts-tests";
+    private final static String NO_MULTI_HOST_PROPERTY_NAME = "com.mysql.mongo.jdbc.testsuite.no-multi-hosts-tests";
 
     // next variables disable some tests
     protected boolean DISABLED_testBug15121 = true; // TODO needs to be fixed on server
@@ -72,13 +72,13 @@ public abstract class BaseTestCase extends TestCase {
     protected boolean DISABLED_testContention = true; // TODO disabled for unknown reason
 
     /**
-     * JDBC URL, initialized from com.mysql.jdbc.testsuite.url system property,
+     * JDBC URL, initialized from com.mysql.mongo.jdbc.testsuite.url system property,
      * or defaults to jdbc:mysql:///test
      */
     protected static String dbUrl = "jdbc:mysql:///test";
 
     /**
-     * JDBC URL, initialized from com.mysql.jdbc.testsuite.url.sha256default system property
+     * JDBC URL, initialized from com.mysql.mongo.jdbc.testsuite.url.sha256default system property
      */
     protected static String sha256Url = null;
 
@@ -94,7 +94,7 @@ public abstract class BaseTestCase extends TestCase {
     private List<String[]> createdObjects;
 
     /** The driver to use */
-    protected String dbClass = "com.mysql.jdbc.Driver";
+    protected String dbClass = "com.mysql.mongo.jdbc.Driver";
 
     /** My instance number */
     private int myInstanceNumber = 0;
@@ -132,25 +132,25 @@ public abstract class BaseTestCase extends TestCase {
         super(name);
         this.myInstanceNumber = instanceCount++;
 
-        String newDbUrl = System.getProperty("com.mysql.jdbc.testsuite.url");
+        String newDbUrl = System.getProperty("com.mysql.mongo.jdbc.testsuite.url");
 
         if ((newDbUrl != null) && (newDbUrl.trim().length() != 0)) {
             dbUrl = newDbUrl;
         } else {
-            String defaultDbUrl = System.getProperty("com.mysql.jdbc.testsuite.url.default");
+            String defaultDbUrl = System.getProperty("com.mysql.mongo.jdbc.testsuite.url.default");
 
             if ((defaultDbUrl != null) && (defaultDbUrl.trim().length() != 0)) {
                 dbUrl = defaultDbUrl;
             }
         }
 
-        String defaultSha256Url = System.getProperty("com.mysql.jdbc.testsuite.url.sha256default");
+        String defaultSha256Url = System.getProperty("com.mysql.mongo.jdbc.testsuite.url.sha256default");
 
         if ((defaultSha256Url != null) && (defaultSha256Url.trim().length() != 0)) {
             sha256Url = defaultSha256Url;
         }
 
-        String newDriver = System.getProperty("com.mysql.jdbc.testsuite.driver");
+        String newDriver = System.getProperty("com.mysql.mongo.jdbc.testsuite.driver");
 
         if ((newDriver != null) && (newDriver.trim().length() != 0)) {
             this.dbClass = newDriver;
@@ -434,7 +434,7 @@ public abstract class BaseTestCase extends TestCase {
      * Returns the properties that represent the default URL used for
      * connections for all testcases.
      * 
-     * @return properties parsed from com.mysql.jdbc.testsuite.url
+     * @return properties parsed from com.mysql.mongo.jdbc.testsuite.url
      * 
      * @throws SQLException
      *             if parsing fails
@@ -581,7 +581,7 @@ public abstract class BaseTestCase extends TestCase {
     }
 
     public void logDebug(String message) {
-        if (System.getProperty("com.mysql.jdbc.testsuite.noDebugOutput") == null) {
+        if (System.getProperty("com.mysql.mongo.jdbc.testsuite.noDebugOutput") == null) {
             System.err.println(message);
         }
     }
@@ -604,7 +604,7 @@ public abstract class BaseTestCase extends TestCase {
     }
 
     protected final boolean runLongTests() {
-        return runTestIfSysPropDefined("com.mysql.jdbc.testsuite.runLongTests");
+        return runTestIfSysPropDefined("com.mysql.mongo.jdbc.testsuite.runLongTests");
     }
 
     /**
@@ -721,7 +721,7 @@ public abstract class BaseTestCase extends TestCase {
             }
         }
 
-        if (System.getProperty("com.mysql.jdbc.testsuite.retainArtifacts") == null) {
+        if (System.getProperty("com.mysql.mongo.jdbc.testsuite.retainArtifacts") == null) {
             Statement st = this.conn == null || this.conn.isClosed() ? getNewConnection().createStatement() : this.conn.createStatement();
             Statement sha256st;
             if (this.sha256Conn == null || this.sha256Conn.isClosed()) {
@@ -819,7 +819,7 @@ public abstract class BaseTestCase extends TestCase {
      *             if an error occurs.
      */
     protected boolean versionMeetsMinimum(int major, int minor, int subminor) throws SQLException {
-        return (((com.mysql.jdbc.Connection) this.conn).versionMeetsMinimum(major, minor, subminor));
+        return (((com.mysql.mongo.jdbc.Connection) this.conn).versionMeetsMinimum(major, minor, subminor));
     }
 
     /**

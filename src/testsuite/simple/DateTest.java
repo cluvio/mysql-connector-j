@@ -35,8 +35,8 @@ import java.util.Calendar;
 import java.util.Properties;
 import java.util.TimeZone;
 
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.TimeUtil;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.TimeUtil;
 
 import testsuite.BaseTestCase;
 

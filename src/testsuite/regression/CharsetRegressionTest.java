@@ -30,9 +30,9 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.ResultSetInternalMethods;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.ResultSetInternalMethods;
 
 import testsuite.BaseStatementInterceptor;
 import testsuite.BaseTestCase;
@@ -75,7 +75,7 @@ public class CharsetRegressionTest extends BaseTestCase {
      */
     public static class Bug73663StatementInterceptor extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (sql.contains("SET NAMES utf8") && !sql.contains("utf8mb4")) {
                 throw new SQLException("Character set statement issued: " + sql);

@@ -26,10 +26,10 @@ package testsuite;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.ResultSetInternalMethods;
-import com.mysql.jdbc.Statement;
-import com.mysql.jdbc.StatementInterceptorV2;
+import com.mysql.mongo.jdbc.Connection;
+import com.mysql.mongo.jdbc.ResultSetInternalMethods;
+import com.mysql.mongo.jdbc.Statement;
+import com.mysql.mongo.jdbc.StatementInterceptorV2;
 
 public class BaseStatementInterceptor implements StatementInterceptorV2 {
 

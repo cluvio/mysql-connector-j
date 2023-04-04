@@ -27,7 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.mysql.jdbc.NotUpdatable;
+import com.mysql.mongo.jdbc.NotUpdatable;
 
 import testsuite.BaseTestCase;
 

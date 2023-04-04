@@ -33,9 +33,9 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Properties;
 
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.util.Base64Decoder;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.util.Base64Decoder;
 
 import testsuite.BaseTestCase;
 
@@ -276,10 +276,10 @@ public class StringRegressionTest extends BaseTestCase {
             pStmt.setString(1, latin1String);
             pStmt.executeUpdate();
 
-            ((com.mysql.jdbc.Connection) latin1Conn).setTraceProtocol(true);
+            ((com.mysql.mongo.jdbc.Connection) latin1Conn).setTraceProtocol(true);
 
             this.rs = this.stmt.executeQuery("SELECT * FROM latin1RegressTest");
-            ((com.mysql.jdbc.Connection) latin1Conn).setTraceProtocol(false);
+            ((com.mysql.mongo.jdbc.Connection) latin1Conn).setTraceProtocol(false);
 
             this.rs.next();
 
@@ -756,7 +756,7 @@ public class StringRegressionTest extends BaseTestCase {
 
                     Properties props = new Properties();
                     props.setProperty("characterEncoding", possibleCharset);
-                    props.setProperty("com.mysql.jdbc.faultInjection.serverCharsetIndex", "65535");
+                    props.setProperty("com.mysql.mongo.jdbc.faultInjection.serverCharsetIndex", "65535");
 
                     Connection forcedCharConn = null;
 

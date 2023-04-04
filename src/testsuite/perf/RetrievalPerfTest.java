@@ -23,7 +23,7 @@
 
 package testsuite.perf;
 
-import com.mysql.jdbc.ConnectionImpl;
+import com.mysql.mongo.jdbc.ConnectionImpl;
 
 import testsuite.BaseTestCase;
 

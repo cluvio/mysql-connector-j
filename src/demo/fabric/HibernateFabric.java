@@ -32,7 +32,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistryBuilder;
 
-import com.mysql.fabric.hibernate.FabricMultiTenantConnectionProvider;
+import com.mysql.mongo.fabric.hibernate.FabricMultiTenantConnectionProvider;
 
 /**
  * Example using Hibernate 4 Multi-tenancy in DATABASE mode with Fabric.

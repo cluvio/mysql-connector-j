@@ -60,18 +60,18 @@ import java.util.concurrent.TimeUnit;
 
 import javax.sql.rowset.CachedRowSet;
 
-import com.mysql.jdbc.CommunicationsException;
-import com.mysql.jdbc.ConnectionImpl.ExceptionInterceptorChain;
-import com.mysql.jdbc.ExceptionInterceptor;
-import com.mysql.jdbc.Extension;
-import com.mysql.jdbc.Messages;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.MysqlDataTruncation;
-import com.mysql.jdbc.NotUpdatable;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.StatementImpl;
-import com.mysql.jdbc.TimeUtil;
-import com.mysql.jdbc.Util;
+import com.mysql.mongo.jdbc.CommunicationsException;
+import com.mysql.mongo.jdbc.ConnectionImpl.ExceptionInterceptorChain;
+import com.mysql.mongo.jdbc.ExceptionInterceptor;
+import com.mysql.mongo.jdbc.Extension;
+import com.mysql.mongo.jdbc.Messages;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.MysqlDataTruncation;
+import com.mysql.mongo.jdbc.NotUpdatable;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.StatementImpl;
+import com.mysql.mongo.jdbc.TimeUtil;
+import com.mysql.mongo.jdbc.Util;
 
 import testsuite.BaseTestCase;
 import testsuite.BufferingLogger;
@@ -2546,7 +2546,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
         Calendar nydCal = null;
 
-        if (((com.mysql.jdbc.Connection) this.conn).getUseGmtMillisForDatetimes()) {
+        if (((com.mysql.mongo.jdbc.Connection) this.conn).getUseGmtMillisForDatetimes()) {
             nydCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         } else {
             nydCal = Calendar.getInstance();
@@ -3098,7 +3098,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         assertEquals(Types.VARBINARY, this.rs.getMetaData().getColumnType(1));
         assertEquals(Types.VARBINARY, this.rs.getMetaData().getColumnType(2));
 
-        this.rs = ((com.mysql.jdbc.Connection) this.conn)
+        this.rs = ((com.mysql.mongo.jdbc.Connection) this.conn)
                 .serverPrepareStatement("select t1.x t1x,(select x from testBug24710 t2 where t2.x=t1.x) t2x from testBug24710 t1").executeQuery();
 
         assertEquals(Types.VARBINARY, this.rs.getMetaData().getColumnType(1));
@@ -3841,7 +3841,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     public void testBug34913() throws Exception {
         Timestamp ts = new Timestamp(new Date(109, 5, 1).getTime());
 
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 'abcdefghij', ?");
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 'abcdefghij', ?");
         this.pstmt.setTimestamp(1, ts);
         this.rs = this.pstmt.executeQuery();
         this.rs.next();
@@ -3937,7 +3937,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
         checkTimestampNanos();
 
-        this.rs = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("SELECT '2008-09-26 15:47:20.797283'").executeQuery();
+        this.rs = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("SELECT '2008-09-26 15:47:20.797283'").executeQuery();
         this.rs.next();
 
         checkTimestampNanos();
@@ -3992,7 +3992,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         checkRanges();
         this.rs.close();
 
-        this.pstmt = ((com.mysql.jdbc.Connection) c).serverPrepareStatement("SELECT int_field, long_field, double_field, string_field FROM testRanges");
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) c).serverPrepareStatement("SELECT int_field, long_field, double_field, string_field FROM testRanges");
         this.rs = this.pstmt.executeQuery();
         this.rs.next();
         checkRanges();
@@ -4004,7 +4004,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         checkRanges();
         this.rs.close();
 
-        this.pstmt = ((com.mysql.jdbc.Connection) c).clientPrepareStatement("SELECT int_field, long_field, double_field, string_field FROM testRanges");
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) c).clientPrepareStatement("SELECT int_field, long_field, double_field, string_field FROM testRanges");
         this.rs = this.pstmt.executeQuery();
         this.rs.next();
         checkRanges();
@@ -4161,7 +4161,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
             createTable("bug32525", "(field1 date, field2 timestamp)");
             this.stmt.executeUpdate("INSERT INTO bug32525 VALUES ('0000-00-00', '0000-00-00 00:00:00')");
 
-            this.rs = ((com.mysql.jdbc.Connection) noStringSyncConn).serverPrepareStatement("SELECT field1, field2 FROM bug32525").executeQuery();
+            this.rs = ((com.mysql.mongo.jdbc.Connection) noStringSyncConn).serverPrepareStatement("SELECT field1, field2 FROM bug32525").executeQuery();
             this.rs.next();
             assertEquals("0000-00-00", this.rs.getString(1));
             assertEquals("0000-00-00 00:00:00", this.rs.getString(2));
@@ -4247,7 +4247,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Bug #60313 bug in com.mysql.jdbc.ResultSetRow.getTimestampFast
+     * Bug #60313 bug in com.mysql.mongo.jdbc.ResultSetRow.getTimestampFast
      */
     public void testBug60313() throws Exception {
         this.stmt.execute("select repeat('Z', 3000), now() + interval 1 microsecond");
@@ -4502,13 +4502,13 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
         public int alreadyClosedCounter = 0;
 
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
         }
 
         public void destroy() {
         }
 
-        public SQLException interceptException(SQLException sqlEx, com.mysql.jdbc.Connection conn) {
+        public SQLException interceptException(SQLException sqlEx, com.mysql.mongo.jdbc.Connection conn) {
 
             sqlEx.printStackTrace();
 

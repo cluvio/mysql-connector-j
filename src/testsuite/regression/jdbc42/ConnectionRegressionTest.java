@@ -32,9 +32,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import com.mysql.jdbc.ConnectionImpl;
-import com.mysql.jdbc.MysqlIO;
-import com.mysql.jdbc.SQLError;
+import com.mysql.mongo.jdbc.ConnectionImpl;
+import com.mysql.mongo.jdbc.MysqlIO;
+import com.mysql.mongo.jdbc.SQLError;
 
 import testsuite.BaseTestCase;
 

@@ -29,12 +29,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import com.mysql.fabric.Server;
-import com.mysql.fabric.ServerGroup;
-import com.mysql.fabric.ServerMode;
-import com.mysql.fabric.ServerRole;
-import com.mysql.fabric.ShardMapping;
-import com.mysql.fabric.proto.xmlrpc.XmlRpcClient;
+import com.mysql.mongo.fabric.Server;
+import com.mysql.mongo.fabric.ServerGroup;
+import com.mysql.mongo.fabric.ServerMode;
+import com.mysql.mongo.fabric.ServerRole;
+import com.mysql.mongo.fabric.ShardMapping;
+import com.mysql.mongo.fabric.proto.xmlrpc.XmlRpcClient;
 
 /**
  * Tests for `mysqlfabric dump.*'.

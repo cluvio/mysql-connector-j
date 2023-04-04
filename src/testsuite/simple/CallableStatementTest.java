@@ -32,7 +32,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Properties;
 
-import com.mysql.jdbc.SQLError;
+import com.mysql.mongo.jdbc.SQLError;
 
 import testsuite.BaseTestCase;
 import testsuite.BufferingLogger;

@@ -36,8 +36,8 @@ import javax.naming.spi.ObjectFactory;
 import javax.sql.DataSource;
 import javax.sql.PooledConnection;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXADataSource;
 
 import testsuite.BaseTestCase;
 
@@ -217,13 +217,13 @@ public class DataSourceTest extends BaseTestCase {
         this.tempDir.mkdir();
         this.tempDir.deleteOnExit();
 
-        com.mysql.jdbc.jdbc2.optional.MysqlDataSource ds;
+        com.mysql.mongo.jdbc.jdbc2.optional.MysqlDataSource ds;
         Hashtable<String, String> env = new Hashtable<String, String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.fscontext.RefFSContextFactory");
         env.put(Context.PROVIDER_URL, this.tempDir.toURI().toString());
         this.ctx = new InitialContext(env);
         assertTrue("Naming Context not created", this.ctx != null);
-        ds = new com.mysql.jdbc.jdbc2.optional.MysqlDataSource();
+        ds = new com.mysql.mongo.jdbc.jdbc2.optional.MysqlDataSource();
         ds.setUrl(dbUrl); // from BaseTestCase
         this.ctx.bind("_test", ds);
     }

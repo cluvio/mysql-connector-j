@@ -44,14 +44,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.ConnectionProperties;
-import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.ResultSetInternalMethods;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.Util;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.ConnectionProperties;
+import com.mysql.mongo.jdbc.Driver;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.ResultSetInternalMethods;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.Util;
 
 import testsuite.BaseStatementInterceptor;
 import testsuite.BaseTestCase;
@@ -826,8 +826,8 @@ public class MetaDataRegressionTest extends BaseTestCase {
      */
 
     public void testBug8800() throws Exception {
-        assertEquals(((com.mysql.jdbc.Connection) this.conn).lowerCaseTableNames(), !this.conn.getMetaData().supportsMixedCaseIdentifiers());
-        assertEquals(((com.mysql.jdbc.Connection) this.conn).lowerCaseTableNames(), !this.conn.getMetaData().supportsMixedCaseQuotedIdentifiers());
+        assertEquals(((com.mysql.mongo.jdbc.Connection) this.conn).lowerCaseTableNames(), !this.conn.getMetaData().supportsMixedCaseIdentifiers());
+        assertEquals(((com.mysql.mongo.jdbc.Connection) this.conn).lowerCaseTableNames(), !this.conn.getMetaData().supportsMixedCaseQuotedIdentifiers());
 
     }
 
@@ -954,7 +954,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
      *             if the test fails.
      */
     public void testBug9769() throws Exception {
-        boolean defaultPatternConfig = ((com.mysql.jdbc.Connection) this.conn).getNullNamePatternMatchesAll();
+        boolean defaultPatternConfig = ((com.mysql.mongo.jdbc.Connection) this.conn).getNullNamePatternMatchesAll();
 
         // We're going to change this in 3.2.x, so make that test here, so we
         // catch it.
@@ -996,7 +996,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
      */
     public void testBug9917() throws Exception {
         String tableName = "testBug9917";
-        boolean defaultCatalogConfig = ((com.mysql.jdbc.Connection) this.conn).getNullCatalogMeansCurrent();
+        boolean defaultCatalogConfig = ((com.mysql.mongo.jdbc.Connection) this.conn).getNullCatalogMeansCurrent();
 
         // We're going to change this in 3.2.x, so make that test here, so we
         // catch it.
@@ -1100,7 +1100,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
          * this.conn.getCatalog(), null, "app tab", this.conn.getCatalog(),
          * null, "app tab");
          */
-        this.rs = ((com.mysql.jdbc.DatabaseMetaData) this.conn.getMetaData()).extractForeignKeyFromCreateTable(this.conn.getCatalog(), "app tab");
+        this.rs = ((com.mysql.mongo.jdbc.DatabaseMetaData) this.conn.getMetaData()).extractForeignKeyFromCreateTable(this.conn.getCatalog(), "app tab");
         assertTrue("must return a row", this.rs.next());
 
         String catalog = this.conn.getCatalog();
@@ -1376,8 +1376,8 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
     private void checkRsmdForBug13277(ResultSetMetaData rsmd) throws SQLException {
 
-        int i = ((com.mysql.jdbc.ConnectionImpl) this.conn)
-                .getMaxBytesPerChar(CharsetMapping.getJavaEncodingForMysqlCharset(((com.mysql.jdbc.Connection) this.conn).getServerCharset()));
+        int i = ((com.mysql.mongo.jdbc.ConnectionImpl) this.conn)
+                .getMaxBytesPerChar(CharsetMapping.getJavaEncodingForMysqlCharset(((com.mysql.mongo.jdbc.Connection) this.conn).getServerCharset()));
         if (i == 1) {
             // This is INT field but still processed in
             // ResultsetMetaData.getColumnDisplaySize
@@ -1560,7 +1560,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
             assertNull(rsmd);
 
-            this.pstmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement(query);
+            this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement(query);
             rsmd = this.pstmt.getMetaData();
 
             assertNull(rsmd);
@@ -1764,8 +1764,8 @@ public class MetaDataRegressionTest extends BaseTestCase {
                     }
 
                     if ("CHAR_OCTET_LENGTH".equals(metadataExpected.getColumnName(i + 1))) {
-                        if (((com.mysql.jdbc.ConnectionImpl) this.conn).getMaxBytesPerChar(
-                                CharsetMapping.getJavaEncodingForMysqlCharset(((com.mysql.jdbc.Connection) this.conn).getServerCharset())) > 1) {
+                        if (((com.mysql.mongo.jdbc.ConnectionImpl) this.conn).getMaxBytesPerChar(
+                                CharsetMapping.getJavaEncodingForMysqlCharset(((com.mysql.mongo.jdbc.Connection) this.conn).getServerCharset())) > 1) {
                             continue; // SHOW CREATE and CHAR_OCT *will* differ
                         }
                     }
@@ -2664,10 +2664,10 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
     public static class StatementInterceptorBug61332 extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection conn)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection conn)
                 throws SQLException {
-            if (interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
-                sql = ((com.mysql.jdbc.PreparedStatement) interceptedStatement).getPreparedSql();
+            if (interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
+                sql = ((com.mysql.mongo.jdbc.PreparedStatement) interceptedStatement).getPreparedSql();
                 assertTrue("Assereet failed on: " + sql,
                         StringUtils.indexOfIgnoreCase(0, sql, "WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND COLUMN_NAME LIKE ?") > -1);
             }
@@ -3338,7 +3338,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
             // 2. extractForeignKeyFromCreateTable(...)
             if (!(versionMeetsMinimum(5, 1) && !versionMeetsMinimum(5, 2))) {
                 try {
-                    this.rs = ((com.mysql.jdbc.DatabaseMetaData) conn1.getMetaData()).extractForeignKeyFromCreateTable(unquotedDbName, unquotedTableName);
+                    this.rs = ((com.mysql.mongo.jdbc.DatabaseMetaData) conn1.getMetaData()).extractForeignKeyFromCreateTable(unquotedDbName, unquotedTableName);
                     if (!this.rs.next()) {
                         failedTests.append("conn.getMetaData.extractForeignKeyFromCreateTable(unquotedDbName, unquotedTableName);\n");
                     }

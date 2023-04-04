@@ -44,16 +44,16 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Properties;
 
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.NotImplemented;
-import com.mysql.jdbc.ParameterBindings;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.TimeUtil;
-import com.mysql.jdbc.exceptions.MySQLStatementCancelledException;
-import com.mysql.jdbc.exceptions.MySQLTimeoutException;
-import com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.NotImplemented;
+import com.mysql.mongo.jdbc.ParameterBindings;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.TimeUtil;
+import com.mysql.mongo.jdbc.exceptions.MySQLStatementCancelledException;
+import com.mysql.mongo.jdbc.exceptions.MySQLTimeoutException;
+import com.mysql.mongo.jdbc.interceptors.ServerStatusDiffInterceptor;
 
 import testsuite.BaseTestCase;
 
@@ -617,7 +617,7 @@ public class StatementsTest extends BaseTestCase {
                 assertTrue(this.rs.next());
                 assertEquals(1, this.rs.getInt(1));
 
-                final PreparedStatement cancelClientPstmt = ((com.mysql.jdbc.Connection) cancelConn).clientPrepareStatement("SELECT SLEEP(30)");
+                final PreparedStatement cancelClientPstmt = ((com.mysql.mongo.jdbc.Connection) cancelConn).clientPrepareStatement("SELECT SLEEP(30)");
 
                 cancelClientPstmt.setQueryTimeout(1);
 
@@ -763,7 +763,7 @@ public class StatementsTest extends BaseTestCase {
 
     public void testEnableStreamingResults() throws Exception {
         Statement streamStmt = this.conn.createStatement();
-        ((com.mysql.jdbc.Statement) streamStmt).enableStreamingResults();
+        ((com.mysql.mongo.jdbc.Statement) streamStmt).enableStreamingResults();
         assertEquals(streamStmt.getFetchSize(), Integer.MIN_VALUE);
         assertEquals(streamStmt.getResultSetType(), ResultSet.TYPE_FORWARD_ONLY);
     }
@@ -813,14 +813,14 @@ public class StatementsTest extends BaseTestCase {
             this.rs.getInt(1);
             rs2.close();
 
-            pstmt2 = ((com.mysql.jdbc.Connection) conn2).clientPrepareStatement("SELECT 1");
+            pstmt2 = ((com.mysql.mongo.jdbc.Connection) conn2).clientPrepareStatement("SELECT 1");
             this.rs = pstmt2.executeQuery();
             this.rs.next();
             this.rs.getInt(1);
             pstmt2.close();
             this.rs.getInt(1);
 
-            pstmt2 = ((com.mysql.jdbc.Connection) conn2).clientPrepareStatement("SELECT 1");
+            pstmt2 = ((com.mysql.mongo.jdbc.Connection) conn2).clientPrepareStatement("SELECT 1");
             this.rs = pstmt2.executeQuery();
             this.rs.next();
             this.rs.getInt(1);
@@ -1680,7 +1680,7 @@ public class StatementsTest extends BaseTestCase {
         /*
          * try {
          * Properties props = new Properties();
-         * props.setProperty("statementInterceptors", "com.mysql.jdbc.interceptors.ResultSetScannerInterceptor");
+         * props.setProperty("statementInterceptors", "com.mysql.mongo.jdbc.interceptors.ResultSetScannerInterceptor");
          * props.setProperty("resultSetScannerRegex", ".*");
          * interceptedConn = getConnectionWithProps(props);
          * this.rs = interceptedConn.createStatement().executeQuery("SELECT 'abc'");
@@ -1731,7 +1731,7 @@ public class StatementsTest extends BaseTestCase {
             this.pstmt.setObject(i + 1, valuesToTest[i]);
         }
 
-        ParameterBindings bindings = ((com.mysql.jdbc.PreparedStatement) this.pstmt).getParameterBindings();
+        ParameterBindings bindings = ((com.mysql.mongo.jdbc.PreparedStatement) this.pstmt).getParameterBindings();
 
         for (int i = 0; i < valuesToTest.length; i++) {
             Object boundObject = bindings.getObject(i + 1);
@@ -1765,9 +1765,9 @@ public class StatementsTest extends BaseTestCase {
         Statement testStmt = testConn.createStatement();
 
         try {
-            ((com.mysql.jdbc.Statement) testStmt).setLocalInfileInputStream(stream);
+            ((com.mysql.mongo.jdbc.Statement) testStmt).setLocalInfileInputStream(stream);
             testStmt.execute("LOAD DATA LOCAL INFILE 'bogusFileName' INTO TABLE localInfileHooked CHARACTER SET "
-                    + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) this.conn).getEncoding(), (com.mysql.jdbc.Connection) this.conn));
+                    + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) this.conn).getEncoding(), (com.mysql.mongo.jdbc.Connection) this.conn));
             assertEquals(-1, stream.read());
             this.rs = testStmt.executeQuery("SELECT field2 FROM localInfileHooked ORDER BY field1 ASC");
             this.rs.next();
@@ -1777,7 +1777,7 @@ public class StatementsTest extends BaseTestCase {
             this.rs.next();
             assertEquals("ijkl", this.rs.getString(1));
         } finally {
-            ((com.mysql.jdbc.Statement) testStmt).setLocalInfileInputStream(null);
+            ((com.mysql.mongo.jdbc.Statement) testStmt).setLocalInfileInputStream(null);
             testConn.close();
         }
     }

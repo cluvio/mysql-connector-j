@@ -30,7 +30,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mysql.jdbc.Util;
+import com.mysql.mongo.jdbc.Util;
 
 import testsuite.BaseTestCase;
 
@@ -61,7 +61,7 @@ public class MicroPerformanceRegressionTest extends BaseTestCase {
         BASELINE_TIMES.put("single selects", new Double(46));
         BASELINE_TIMES.put("5 standalone queries", new Double(146));
         BASELINE_TIMES.put("total time all queries", new Double(190));
-        if (com.mysql.jdbc.Util.isJdbc4()) {
+        if (com.mysql.mongo.jdbc.Util.isJdbc4()) {
             BASELINE_TIMES.put("PreparedStatement.setInt()", new Double(0.0014));
             BASELINE_TIMES.put("PreparedStatement.setTime()", new Double(0.0107));
             BASELINE_TIMES.put("PreparedStatement.setTimestamp()", new Double(0.0182));

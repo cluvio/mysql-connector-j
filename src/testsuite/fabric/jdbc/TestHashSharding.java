@@ -26,8 +26,8 @@ package testsuite.fabric.jdbc;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.mysql.fabric.jdbc.FabricMySQLConnection;
-import com.mysql.fabric.jdbc.FabricMySQLDataSource;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLConnection;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLDataSource;
 
 import testsuite.fabric.BaseFabricTestCase;
 

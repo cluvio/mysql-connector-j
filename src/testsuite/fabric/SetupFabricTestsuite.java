@@ -30,14 +30,14 @@ import java.sql.Statement;
 public class SetupFabricTestsuite {
 
     public static void main(String args[]) throws Exception {
-        String hostname = System.getProperty("com.mysql.fabric.testsuite.global.host");
-        String port = System.getProperty("com.mysql.fabric.testsuite.global.port");
-        String username = System.getProperty("com.mysql.fabric.testsuite.username");
-        String password = System.getProperty("com.mysql.fabric.testsuite.password");
+        String hostname = System.getProperty("com.mysql.mongo.fabric.testsuite.global.host");
+        String port = System.getProperty("com.mysql.mongo.fabric.testsuite.global.port");
+        String username = System.getProperty("com.mysql.mongo.fabric.testsuite.username");
+        String password = System.getProperty("com.mysql.mongo.fabric.testsuite.password");
 
         // Load the driver if running under Java 5
-        if (!com.mysql.jdbc.Util.isJdbc4()) {
-            Class.forName("com.mysql.jdbc.Driver");
+        if (!com.mysql.mongo.jdbc.Util.isJdbc4()) {
+            Class.forName("com.mysql.mongo.jdbc.Driver");
         }
 
         // Create database employees

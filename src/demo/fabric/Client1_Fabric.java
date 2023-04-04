@@ -23,7 +23,7 @@
 
 package demo.fabric;
 
-import com.mysql.fabric.proto.xmlrpc.XmlRpcClient;
+import com.mysql.mongo.fabric.proto.xmlrpc.XmlRpcClient;
 
 /**
  * Basic usage client. print out a bunch of information we can ask for from Fabric

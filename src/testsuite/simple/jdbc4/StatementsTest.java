@@ -34,7 +34,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import com.mysql.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
 
 import testsuite.BaseTestCase;
 import testsuite.regression.ConnectionRegressionTest.CountingReBalanceStrategy;
@@ -127,7 +127,7 @@ public class StatementsTest extends BaseTestCase {
         props1.put("useUnicode", "true");
         props1.put("characterEncoding", "latin1"); // ensure charset isn't utf8 here
         Connection conn1 = getConnectionWithProps(props1);
-        com.mysql.jdbc.PreparedStatement pstmt1 = (com.mysql.jdbc.PreparedStatement) conn1
+        com.mysql.mongo.jdbc.PreparedStatement pstmt1 = (com.mysql.mongo.jdbc.PreparedStatement) conn1
                 .prepareStatement("INSERT INTO testSetNCharacterStream (c1, c2, c3) VALUES (?, ?, ?)");
         pstmt1.setNCharacterStream(1, null, 0);
         pstmt1.setNCharacterStream(2, new StringReader("aaa"), 3);
@@ -148,7 +148,7 @@ public class StatementsTest extends BaseTestCase {
         props2.put("useUnicode", "true");
         props2.put("characterEncoding", "UTF-8"); // ensure charset is utf8 here
         Connection conn2 = getConnectionWithProps(props2);
-        com.mysql.jdbc.PreparedStatement pstmt2 = (com.mysql.jdbc.PreparedStatement) conn2
+        com.mysql.mongo.jdbc.PreparedStatement pstmt2 = (com.mysql.mongo.jdbc.PreparedStatement) conn2
                 .prepareStatement("INSERT INTO testSetNCharacterStream (c1, c2, c3) VALUES (?, ?, ?)");
         pstmt2.setNCharacterStream(1, null, 0);
         pstmt2.setNCharacterStream(2, new StringReader("aaa"), 3);

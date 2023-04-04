@@ -37,13 +37,13 @@ import java.util.concurrent.Executors;
 
 import javax.sql.XAConnection;
 
-import com.mysql.jdbc.CallableStatement;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.ReplicationConnection;
-import com.mysql.jdbc.StatementImpl;
-import com.mysql.jdbc.Util;
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.mysql.mongo.jdbc.CallableStatement;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.PreparedStatement;
+import com.mysql.mongo.jdbc.ReplicationConnection;
+import com.mysql.mongo.jdbc.StatementImpl;
+import com.mysql.mongo.jdbc.Util;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXADataSource;
 
 import testsuite.BaseTestCase;
 
@@ -142,7 +142,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         // **testing PreparedStatement**
         // ResultSets should be closed when owning PreparedStatement is closed
-        testPrepStatement = (com.mysql.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
+        testPrepStatement = (com.mysql.mongo.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
 
         assertFalse(testStep + ".PS:0. PreparedStatement.isCloseOnCompletion(): false by default.", testPrepStatement.isCloseOnCompletion());
         assertFalse(testStep + ".PS:0. PreparedStatement.isClosed(): false.", testPrepStatement.isClosed());
@@ -216,7 +216,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testStatement.closeOnCompletion();
 
         testResultSet1 = testStatement.executeQuery("SELECT 1");
-        testStatement.executeUpdate("INSERT INTO testBug68916_tbl (fld2) VALUES (1), (2), (3)", com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
+        testStatement.executeUpdate("INSERT INTO testBug68916_tbl (fld2) VALUES (1), (2), (3)", com.mysql.mongo.jdbc.Statement.RETURN_GENERATED_KEYS);
 
         assertTrue(testStep + ".ST:1. ResultSet.isClosed(): true after executeUpdate() in same Statement.", testResultSet1.isClosed());
         assertFalse(testStep + ".ST:1. Statement.isClosed(): false.", testStatement.isClosed());
@@ -444,7 +444,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         // **testing PreparedStatement**
         // ResultSets should stay open when owning PreparedStatement is closed
-        testPrepStatement = (com.mysql.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
+        testPrepStatement = (com.mysql.mongo.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
 
         assertFalse(testStep + ".PS:0. PreparedStatement.isCloseOnCompletion(): false by default.", testPrepStatement.isCloseOnCompletion());
         assertFalse(testStep + ".PS:0. PreparedStatement.isClosed(): false.", testPrepStatement.isClosed());
@@ -762,7 +762,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         // **testing PreparedStatement**
         // ResultSets should stay open when owning PreparedStatement is closed
-        testPrepStatement = (com.mysql.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
+        testPrepStatement = (com.mysql.mongo.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
 
         assertFalse(testStep + ".PS:0. PreparedStatement.isCloseOnCompletion(): false by default.", testPrepStatement.isCloseOnCompletion());
         assertFalse(testStep + ".PS:0. PreparedStatement.isClosed(): false.", testPrepStatement.isClosed());
@@ -1100,7 +1100,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         // **testing PreparedStatement**
         // ResultSets should be closed when owning PreparedStatement is closed
-        testPrepStatement = (com.mysql.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
+        testPrepStatement = (com.mysql.mongo.jdbc.PreparedStatement) testConnection.prepareStatement("SELECT 1");
 
         assertFalse(testStep + ".PS:0. PreparedStatement.isCloseOnCompletion(): false by default.", testPrepStatement.isCloseOnCompletion());
         assertFalse(testStep + ".PS:0. PreparedStatement.isClosed(): false.", testPrepStatement.isClosed());
@@ -1174,7 +1174,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testStatement.closeOnCompletion();
 
         testResultSet1 = testStatement.executeQuery("SELECT 1");
-        testStatement.executeUpdate("INSERT INTO testBug68916_tbl (fld2) VALUES (1), (2), (3)", com.mysql.jdbc.Statement.RETURN_GENERATED_KEYS);
+        testStatement.executeUpdate("INSERT INTO testBug68916_tbl (fld2) VALUES (1), (2), (3)", com.mysql.mongo.jdbc.Statement.RETURN_GENERATED_KEYS);
 
         assertTrue(testStep + ".ST:1. ResultSet.isClosed(): true after executeUpdate() in same Statement.", testResultSet1.isClosed());
         assertFalse(testStep + ".ST:1. Statement.isClosed(): false.", testStatement.isClosed());
@@ -1498,7 +1498,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testConn.close();
 
         // Plain connection with proxied result sets.
-        testConn = getConnectionWithProps("statementInterceptors=com.mysql.jdbc.interceptors.ResultSetScannerInterceptor,resultSetScannerRegex=.*");
+        testConn = getConnectionWithProps("statementInterceptors=com.mysql.mongo.jdbc.interceptors.ResultSetScannerInterceptor,resultSetScannerRegex=.*");
         assertFalse(testConn.getClass().getName().matches("^(?:com\\.sun\\.proxy\\.)?\\$Proxy\\d*"));
         assertTrue(testConn.equals(testConn));
         this.stmt = testConn.createStatement();
@@ -1574,15 +1574,15 @@ public class StatementRegressionTest extends BaseTestCase {
         xaDs.setUrl(BaseTestCase.dbUrl);
         XAConnection xaTestConn = xaDs.getXAConnection();
         testConn = xaTestConn.getConnection();
-        Connection unwrappedTestConn = testConn.unwrap(com.mysql.jdbc.Connection.class);
+        Connection unwrappedTestConn = testConn.unwrap(com.mysql.mongo.jdbc.Connection.class);
         assertTrue(unwrappedTestConn.getClass().getName().matches("^(?:com\\.sun\\.proxy\\.)?\\$Proxy\\d*"));
         assertTrue(unwrappedTestConn.equals(unwrappedTestConn));
         this.stmt = testConn.createStatement();
-        Statement unwrappedStmt = this.stmt.unwrap(com.mysql.jdbc.Statement.class);
+        Statement unwrappedStmt = this.stmt.unwrap(com.mysql.mongo.jdbc.Statement.class);
         assertTrue(unwrappedStmt.getClass().getName().matches("^(?:com\\.sun\\.proxy\\.)?\\$Proxy\\d*"));
         assertTrue(unwrappedStmt.equals(unwrappedStmt));
         this.pstmt = testConn.prepareStatement("SELECT 'testBug78313'");
-        Statement unwrappedPstmt = this.pstmt.unwrap(com.mysql.jdbc.Statement.class);
+        Statement unwrappedPstmt = this.pstmt.unwrap(com.mysql.mongo.jdbc.Statement.class);
         assertTrue(unwrappedPstmt.getClass().getName().matches("^(?:com\\.sun\\.proxy\\.)?\\$Proxy\\d*"));
         assertTrue(unwrappedPstmt.equals(unwrappedPstmt));
         testConn.close();

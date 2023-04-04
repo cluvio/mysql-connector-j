@@ -27,8 +27,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.mysql.fabric.jdbc.FabricMySQLConnection;
-import com.mysql.fabric.jdbc.FabricMySQLDataSource;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLConnection;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLDataSource;
 
 import testsuite.fabric.BaseFabricTestCase;
 
@@ -183,7 +183,7 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
             this.conn.createStatement();
             fail("Cannot do anything without a mapping/server group");
         } catch (SQLException ex) {
-            assertEquals(com.mysql.jdbc.SQLError.SQL_STATE_CONNECTION_REJECTED, ex.getSQLState());
+            assertEquals(com.mysql.mongo.jdbc.SQLError.SQL_STATE_CONNECTION_REJECTED, ex.getSQLState());
         }
         this.conn.addQueryTable("employees");
         this.conn.createStatement();

@@ -52,15 +52,15 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import com.mysql.jdbc.ConnectionProperties;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.integration.jboss.MysqlValidConnectionChecker;
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSourceFactory;
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlXid;
+import com.mysql.mongo.jdbc.ConnectionProperties;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.integration.jboss.MysqlValidConnectionChecker;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlDataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlDataSourceFactory;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXid;
 
 import testsuite.BaseTestCase;
 import testsuite.simple.DataSourceTest;
@@ -70,15 +70,15 @@ import testsuite.simple.DataSourceTest;
  */
 public class DataSourceRegressionTest extends BaseTestCase {
 
-    public final static String DS_DATABASE_PROP_NAME = "com.mysql.jdbc.test.ds.db";
+    public final static String DS_DATABASE_PROP_NAME = "com.mysql.mongo.jdbc.test.ds.db";
 
-    public final static String DS_HOST_PROP_NAME = "com.mysql.jdbc.test.ds.host";
+    public final static String DS_HOST_PROP_NAME = "com.mysql.mongo.jdbc.test.ds.host";
 
-    public final static String DS_PASSWORD_PROP_NAME = "com.mysql.jdbc.test.ds.password";
+    public final static String DS_PASSWORD_PROP_NAME = "com.mysql.mongo.jdbc.test.ds.password";
 
-    public final static String DS_PORT_PROP_NAME = "com.mysql.jdbc.test.ds.port";
+    public final static String DS_PORT_PROP_NAME = "com.mysql.mongo.jdbc.test.ds.port";
 
-    public final static String DS_USER_PROP_NAME = "com.mysql.jdbc.test.ds.user";
+    public final static String DS_USER_PROP_NAME = "com.mysql.mongo.jdbc.test.ds.user";
 
     private Context ctx;
 
@@ -398,7 +398,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
         Connection physConn = pooledConn.getConnection();
         Statement physStatement = physConn.createStatement();
 
-        Method enableStreamingResultsMethodStmt = Class.forName("com.mysql.jdbc.jdbc2.optional.StatementWrapper").getMethod("enableStreamingResults",
+        Method enableStreamingResultsMethodStmt = Class.forName("com.mysql.mongo.jdbc.jdbc2.optional.StatementWrapper").getMethod("enableStreamingResults",
                 new Class[0]);
         enableStreamingResultsMethodStmt.invoke(physStatement, (Object[]) null);
         this.rs = physStatement.executeQuery("SELECT 1");
@@ -416,7 +416,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
         }
 
         PreparedStatement physPrepStmt = physConn.prepareStatement("SELECT 1");
-        Method enableStreamingResultsMethodPstmt = Class.forName("com.mysql.jdbc.jdbc2.optional.PreparedStatementWrapper").getMethod("enableStreamingResults",
+        Method enableStreamingResultsMethodPstmt = Class.forName("com.mysql.mongo.jdbc.jdbc2.optional.PreparedStatementWrapper").getMethod("enableStreamingResults",
                 (Class[]) null);
         enableStreamingResultsMethodPstmt.invoke(physPrepStmt, (Object[]) null);
 
@@ -540,7 +540,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
             final XAConnection xaConn = myDs.getXAConnection();
             final XAResource xaRes = xaConn.getXAResource();
             final Connection dbConn = xaConn.getConnection();
-            final long connId = ((MySQLConnection) ((com.mysql.jdbc.Connection) dbConn).getConnectionMutex()).getId();
+            final long connId = ((MySQLConnection) ((com.mysql.mongo.jdbc.Connection) dbConn).getConnectionMutex()).getId();
 
             xaRes.start(xid, XAResource.TMNOFLAGS);
             xaRes.end(xid, XAResource.TMSUCCESS);

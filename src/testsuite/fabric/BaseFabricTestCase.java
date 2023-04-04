@@ -23,25 +23,25 @@
 
 package testsuite.fabric;
 
-import com.mysql.fabric.jdbc.FabricMySQLDataSource;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLDataSource;
 
 import junit.framework.TestCase;
 
 public abstract class BaseFabricTestCase extends TestCase {
-    protected String hostname = System.getProperty("com.mysql.fabric.testsuite.hostname");
-    protected String portString = System.getProperty("com.mysql.fabric.testsuite.port");
-    protected String fabricUsername = System.getProperty("com.mysql.fabric.testsuite.fabricUsername");
-    protected String fabricPassword = System.getProperty("com.mysql.fabric.testsuite.fabricPassword");
-    protected String username = System.getProperty("com.mysql.fabric.testsuite.username");
-    protected String password = System.getProperty("com.mysql.fabric.testsuite.password");
-    protected String database = System.getProperty("com.mysql.fabric.testsuite.database");
+    protected String hostname = System.getProperty("com.mysql.mongo.fabric.testsuite.hostname");
+    protected String portString = System.getProperty("com.mysql.mongo.fabric.testsuite.port");
+    protected String fabricUsername = System.getProperty("com.mysql.mongo.fabric.testsuite.fabricUsername");
+    protected String fabricPassword = System.getProperty("com.mysql.mongo.fabric.testsuite.fabricPassword");
+    protected String username = System.getProperty("com.mysql.mongo.fabric.testsuite.username");
+    protected String password = System.getProperty("com.mysql.mongo.fabric.testsuite.password");
+    protected String database = System.getProperty("com.mysql.mongo.fabric.testsuite.database");
 
-    protected String globalHost = System.getProperty("com.mysql.fabric.testsuite.global.host");
-    protected String globalPort = System.getProperty("com.mysql.fabric.testsuite.global.port");
-    protected String shard1Host = System.getProperty("com.mysql.fabric.testsuite.shard1.host");
-    protected String shard1Port = System.getProperty("com.mysql.fabric.testsuite.shard1.port");
-    protected String shard2Host = System.getProperty("com.mysql.fabric.testsuite.shard2.host");
-    protected String shard2Port = System.getProperty("com.mysql.fabric.testsuite.shard2.port");
+    protected String globalHost = System.getProperty("com.mysql.mongo.fabric.testsuite.global.host");
+    protected String globalPort = System.getProperty("com.mysql.mongo.fabric.testsuite.global.port");
+    protected String shard1Host = System.getProperty("com.mysql.mongo.fabric.testsuite.shard1.host");
+    protected String shard1Port = System.getProperty("com.mysql.mongo.fabric.testsuite.shard1.port");
+    protected String shard2Host = System.getProperty("com.mysql.mongo.fabric.testsuite.shard2.host");
+    protected String shard2Port = System.getProperty("com.mysql.mongo.fabric.testsuite.shard2.port");
 
     protected int port = 0;
     protected String fabricUrl;
@@ -61,7 +61,7 @@ public abstract class BaseFabricTestCase extends TestCase {
                 || (this.shard2Host != null && this.shard2Host.trim().length() > 0) || (this.shard2Port != null && this.shard2Port.trim().length() > 0);
 
         if (this.isSetForFabricTest) {
-            Class.forName("com.mysql.fabric.jdbc.FabricMySQLDriver");
+            Class.forName("com.mysql.mongo.fabric.jdbc.FabricMySQLDriver");
 
             if (this.portString != null && this.portString.trim().length() > 0) {
                 this.port = Integer.valueOf(this.portString);

@@ -40,7 +40,7 @@ import java.time.OffsetTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.Callable;
 
-import com.mysql.jdbc.NotUpdatable;
+import com.mysql.mongo.jdbc.NotUpdatable;
 
 import testsuite.BaseTestCase;
 

@@ -28,8 +28,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import com.mysql.fabric.jdbc.FabricMySQLConnection;
-import com.mysql.fabric.jdbc.FabricMySQLDataSource;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLConnection;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLDataSource;
 
 /**
  * Demonstrate working with employee data in MySQL Fabric with Connector/J and the JDBC APIs via a DataSource-created connection.
@@ -55,7 +55,7 @@ public class EmployeesDataSource {
         ds.setFabricPassword(fabricPassword);
 
         // Load the driver if running under Java 5
-        if (!com.mysql.jdbc.Util.isJdbc4()) {
+        if (!com.mysql.mongo.jdbc.Util.isJdbc4()) {
             Class.forName("com.mysql.fabric.jdbc.FabricMySQLDriver");
         }
 

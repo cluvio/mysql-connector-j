@@ -93,48 +93,48 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import com.mysql.fabric.jdbc.ErrorReportingExceptionInterceptor;
-import com.mysql.jdbc.AuthenticationPlugin;
-import com.mysql.jdbc.Buffer;
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.ConnectionGroupManager;
-import com.mysql.jdbc.ConnectionImpl;
-import com.mysql.jdbc.ConnectionProperties;
-import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.ExceptionInterceptor;
-import com.mysql.jdbc.LoadBalanceExceptionChecker;
-import com.mysql.jdbc.LoadBalancedConnectionProxy;
-import com.mysql.jdbc.Messages;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.MysqlDataTruncation;
-import com.mysql.jdbc.MysqlErrorNumbers;
-import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.RandomBalanceStrategy;
-import com.mysql.jdbc.ReplicationConnection;
-import com.mysql.jdbc.ReplicationConnectionGroup;
-import com.mysql.jdbc.ReplicationConnectionGroupManager;
-import com.mysql.jdbc.ReplicationConnectionProxy;
-import com.mysql.jdbc.ResultSetInternalMethods;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.SocketMetadata;
-import com.mysql.jdbc.StandardSocketFactory;
-import com.mysql.jdbc.StatementInterceptorV2;
-import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.TimeUtil;
-import com.mysql.jdbc.Util;
-import com.mysql.jdbc.authentication.CachingSha2PasswordPlugin;
-import com.mysql.jdbc.authentication.MysqlNativePasswordPlugin;
-import com.mysql.jdbc.authentication.Sha256PasswordPlugin;
-import com.mysql.jdbc.exceptions.MySQLNonTransientConnectionException;
-import com.mysql.jdbc.exceptions.MySQLTransientException;
-import com.mysql.jdbc.integration.jboss.MysqlValidConnectionChecker;
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlXid;
-import com.mysql.jdbc.jdbc2.optional.SuspendableXAConnection;
-import com.mysql.jdbc.jmx.ReplicationGroupManagerMBean;
-import com.mysql.jdbc.log.LogUtils;
-import com.mysql.jdbc.profiler.ProfilerEvent;
+import com.mysql.mongo.fabric.jdbc.ErrorReportingExceptionInterceptor;
+import com.mysql.mongo.jdbc.AuthenticationPlugin;
+import com.mysql.mongo.jdbc.Buffer;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.ConnectionGroupManager;
+import com.mysql.mongo.jdbc.ConnectionImpl;
+import com.mysql.mongo.jdbc.ConnectionProperties;
+import com.mysql.mongo.jdbc.Driver;
+import com.mysql.mongo.jdbc.ExceptionInterceptor;
+import com.mysql.mongo.jdbc.LoadBalanceExceptionChecker;
+import com.mysql.mongo.jdbc.LoadBalancedConnectionProxy;
+import com.mysql.mongo.jdbc.Messages;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.MysqlDataTruncation;
+import com.mysql.mongo.jdbc.MysqlErrorNumbers;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.RandomBalanceStrategy;
+import com.mysql.mongo.jdbc.ReplicationConnection;
+import com.mysql.mongo.jdbc.ReplicationConnectionGroup;
+import com.mysql.mongo.jdbc.ReplicationConnectionGroupManager;
+import com.mysql.mongo.jdbc.ReplicationConnectionProxy;
+import com.mysql.mongo.jdbc.ResultSetInternalMethods;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.SocketMetadata;
+import com.mysql.mongo.jdbc.StandardSocketFactory;
+import com.mysql.mongo.jdbc.StatementInterceptorV2;
+import com.mysql.mongo.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.TimeUtil;
+import com.mysql.mongo.jdbc.Util;
+import com.mysql.mongo.jdbc.authentication.CachingSha2PasswordPlugin;
+import com.mysql.mongo.jdbc.authentication.MysqlNativePasswordPlugin;
+import com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin;
+import com.mysql.mongo.jdbc.exceptions.MySQLNonTransientConnectionException;
+import com.mysql.mongo.jdbc.exceptions.MySQLTransientException;
+import com.mysql.mongo.jdbc.integration.jboss.MysqlValidConnectionChecker;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXid;
+import com.mysql.mongo.jdbc.jdbc2.optional.SuspendableXAConnection;
+import com.mysql.mongo.jdbc.jmx.ReplicationGroupManagerMBean;
+import com.mysql.mongo.jdbc.log.LogUtils;
+import com.mysql.mongo.jdbc.profiler.ProfilerEvent;
 
 import testsuite.BaseStatementInterceptor;
 import testsuite.BaseTestCase;
@@ -675,14 +675,14 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 assertTrue("08S01".equals(sqlEx.getSQLState()));
             }
 
-            ((com.mysql.jdbc.Connection) failoverConnection).setFailedOver(true);
+            ((com.mysql.mongo.jdbc.Connection) failoverConnection).setFailedOver(true);
 
             failoverConnection.setAutoCommit(true);
 
             String failedConnectionId = getSingleIndexedValueWithQuery(failoverConnection, 1, "SELECT CONNECTION_ID()").toString();
             System.out.println("Failed over connection id: " + failedConnectionId);
 
-            ((com.mysql.jdbc.Connection) failoverConnection).setFailedOver(true);
+            ((com.mysql.mongo.jdbc.Connection) failoverConnection).setFailedOver(true);
 
             for (int i = 0; i < 30; i++) {
                 failoverConnection.setAutoCommit(true);
@@ -745,7 +745,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                 String charsetToCheck = "ms932";
 
-                assertEquals(charsetToCheck, ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toLowerCase(Locale.ENGLISH));
+                assertEquals(charsetToCheck, ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toLowerCase(Locale.ENGLISH));
 
                 try {
                     ms932Conn.createStatement().executeUpdate("drop table if exists testBug7607");
@@ -783,7 +783,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 this.rs = shiftJisConn.createStatement().executeQuery("SELECT 'abc'");
                 assertTrue(this.rs.next());
 
-                String charSetUC = ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toUpperCase(Locale.US);
+                String charSetUC = ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toUpperCase(Locale.US);
 
                 // assertEquals("SHIFT_JIS", charSetUC);
 
@@ -807,10 +807,10 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                 if (!versionMeetsMinimum(4, 1, 11)) {
                     assertEquals("sjis".toLowerCase(Locale.ENGLISH),
-                            ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toLowerCase(Locale.ENGLISH));
+                            ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toLowerCase(Locale.ENGLISH));
                 } else {
                     assertEquals("windows-31j".toLowerCase(Locale.ENGLISH),
-                            ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toLowerCase(Locale.ENGLISH));
+                            ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toLowerCase(Locale.ENGLISH));
                 }
 
                 props = new Properties();
@@ -826,7 +826,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 this.rs = cp943Conn.createStatement().executeQuery("SELECT 'abc'");
                 assertTrue(this.rs.next());
 
-                charSetUC = ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toUpperCase(Locale.US);
+                charSetUC = ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(1).toUpperCase(Locale.US);
 
                 assertEquals("CP943", charSetUC);
 
@@ -915,7 +915,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * // failover and retry rs1 =
      * stmt1.executeQuery("show variables like 'port'");
      * 
-     * rs1.next(); assertTrue(!((com.mysql.jdbc.Connection) con)
+     * rs1.next(); assertTrue(!((com.mysql.mongo.jdbc.Connection) con)
      * .isMasterConnection());
      * 
      * rs1 = stmt1.executeQuery("select connection_id()"); rs1.next(); String
@@ -938,7 +938,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * // failover and retry rs1 =
      * stmt1.executeQuery("show variables like 'port'");
      * 
-     * rs1.next(); assertTrue(((com.mysql.jdbc.Connection) con)
+     * rs1.next(); assertTrue(((com.mysql.mongo.jdbc.Connection) con)
      * .isMasterConnection());
      * 
      * } finally { if (con != null) { try { con.close(); } catch (Exception e) {
@@ -987,13 +987,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
             Connection bareConn = getConnectionWithProps(props);
 
-            int currentOpenStatements = ((com.mysql.jdbc.Connection) bareConn).getActiveStatementCount();
+            int currentOpenStatements = ((com.mysql.mongo.jdbc.Connection) bareConn).getActiveStatementCount();
 
             try {
                 bareConn.prepareStatement("Boo!");
                 fail("Should not've been able to prepare that one!");
             } catch (SQLException sqlEx) {
-                assertEquals(currentOpenStatements, ((com.mysql.jdbc.Connection) bareConn).getActiveStatementCount());
+                assertEquals(currentOpenStatements, ((com.mysql.mongo.jdbc.Connection) bareConn).getActiveStatementCount());
             } finally {
                 bareConn.close();
             }
@@ -1076,9 +1076,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         Connection maxPerfConn = getConnectionWithProps(props);
         // 'elideSetAutoCommits' feature was turned off due to Server Bug#66884. See also ConnectionPropertiesImpl#getElideSetAutoCommits().
-        assertEquals(false, ((com.mysql.jdbc.Connection) maxPerfConn).getElideSetAutoCommits());
+        assertEquals(false, ((com.mysql.mongo.jdbc.Connection) maxPerfConn).getElideSetAutoCommits());
         // TODO Turn this test back on as soon as the server bug is fixed. Consider making it version specific.
-        // assertEquals(true, ((com.mysql.jdbc.Connection) maxPerfConn).getElideSetAutoCommits());
+        // assertEquals(true, ((com.mysql.mongo.jdbc.Connection) maxPerfConn).getElideSetAutoCommits());
     }
 
     /**
@@ -1341,7 +1341,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                                     // the
                                     // column gets "touched"
                                     if (!invokeEx.getCause().getClass().isAssignableFrom(java.sql.SQLException.class)
-                                            && !invokeEx.getCause().getClass().getName().equals("com.mysql.jdbc.NotImplemented")
+                                            && !invokeEx.getCause().getClass().getName().equals("com.mysql.mongo.jdbc.NotImplemented")
                                             && !invokeEx.getCause().getClass().getName().equals("java.sql.SQLFeatureNotSupportedException")) {
                                         throw invokeEx;
                                     }
@@ -1919,13 +1919,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     public void testBug29106() throws Exception {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        Class<?> checkerClass = cl.loadClass("com.mysql.jdbc.integration.jboss.MysqlValidConnectionChecker");
+        Class<?> checkerClass = cl.loadClass("com.mysql.mongo.jdbc.integration.jboss.MysqlValidConnectionChecker");
         ((MysqlValidConnectionChecker) checkerClass.newInstance()).isValidConnection(this.conn);
     }
 
     public void testBug29852() throws Exception {
         Connection lbConn = getLoadBalancedConnection();
-        assertTrue(!lbConn.getClass().getName().startsWith("com.mysql.jdbc"));
+        assertTrue(!lbConn.getClass().getName().startsWith("com.mysql.mongo.jdbc"));
         lbConn.close();
     }
 
@@ -2041,7 +2041,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     /** 34703 [NEW]: isValild() aborts Connection on timeout */
 
     public void testBug34703() throws Exception {
-        if (!com.mysql.jdbc.Util.isJdbc4()) {
+        if (!com.mysql.mongo.jdbc.Util.isJdbc4()) {
             return;
         }
 
@@ -2054,7 +2054,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     public void testBug34937() throws Exception {
-        com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource ds = new com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource();
+        com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource ds = new com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource();
         StringBuilder urlBuf = new StringBuilder();
         urlBuf.append(getMasterSlaveUrl());
         urlBuf.append("?");
@@ -2472,7 +2472,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     private ReplicationGroupManagerMBean getReplicationMBean() throws Exception {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
-        ObjectName mbeanName = new ObjectName("com.mysql.jdbc.jmx:type=ReplicationGroupManager");
+        ObjectName mbeanName = new ObjectName("com.mysql.mongo.jdbc.jmx:type=ReplicationGroupManager");
         return (ReplicationGroupManagerMBean) MBeanServerInvocationHandler.newProxyInstance(mbs, mbeanName, ReplicationGroupManagerMBean.class, false);
 
     }
@@ -2545,14 +2545,14 @@ public class ConnectionRegressionTest extends BaseTestCase {
     public void testBug45171() throws Exception {
         List<Statement> statementsToTest = new LinkedList<Statement>();
         statementsToTest.add(this.conn.createStatement());
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1"));
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", Statement.RETURN_GENERATED_KEYS));
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", new int[0]));
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", new String[0]));
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1"));
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1", Statement.RETURN_GENERATED_KEYS));
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1", new int[0]));
-        statementsToTest.add(((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1", new String[0]));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1"));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", Statement.RETURN_GENERATED_KEYS));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", new int[0]));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", new String[0]));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1"));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1", Statement.RETURN_GENERATED_KEYS));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1", new int[0]));
+        statementsToTest.add(((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("SELECT 1", new String[0]));
 
         for (Statement toTest : statementsToTest) {
             assertEquals(toTest.getResultSetType(), ResultSet.TYPE_FORWARD_ONLY);
@@ -2796,7 +2796,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     public void testBug49700() throws Exception {
         Connection c = getConnectionWithProps("sessionVariables=@foo='bar'");
         assertEquals("bar", getSingleIndexedValueWithQuery(c, 1, "SELECT @foo"));
-        ((com.mysql.jdbc.Connection) c).resetServerState();
+        ((com.mysql.mongo.jdbc.Connection) c).resetServerState();
         assertEquals("bar", getSingleIndexedValueWithQuery(c, 1, "SELECT @foo"));
     }
 
@@ -2821,7 +2821,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     public void testBug51643() throws Exception {
         Properties props = new Properties();
-        props.setProperty("loadBalanceStrategy", "com.mysql.jdbc.SequentialBalanceStrategy");
+        props.setProperty("loadBalanceStrategy", "com.mysql.mongo.jdbc.SequentialBalanceStrategy");
 
         Connection lbConn = getUnreliableLoadBalancedConnection(new String[] { "first", "second" }, props);
         try {
@@ -2925,7 +2925,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         }
 
         @Override
-        public com.mysql.jdbc.ConnectionImpl pickConnection(LoadBalancedConnectionProxy proxy, List<String> configuredHosts,
+        public com.mysql.mongo.jdbc.ConnectionImpl pickConnection(LoadBalancedConnectionProxy proxy, List<String> configuredHosts,
                 Map<String, ConnectionImpl> liveConnections, long[] responseTimes, int numRetries) throws SQLException {
             if (forcedFutureServer == null || forceFutureServerTimes == 0 || !configuredHosts.contains(forcedFutureServer)) {
                 return super.pickConnection(proxy, configuredHosts, liveConnections, responseTimes, numRetries);
@@ -2949,7 +2949,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         }
 
         @Override
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
             super.init(conn, props);
 
         }
@@ -3030,7 +3030,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         }
 
         @Override
-        public com.mysql.jdbc.ConnectionImpl pickConnection(LoadBalancedConnectionProxy proxy, List<String> configuredHosts,
+        public com.mysql.mongo.jdbc.ConnectionImpl pickConnection(LoadBalancedConnectionProxy proxy, List<String> configuredHosts,
                 Map<String, ConnectionImpl> liveConnections, long[] responseTimes, int numRetries) throws SQLException {
             rebalancedTimes++;
             return super.pickConnection(proxy, configuredHosts, liveConnections, responseTimes, numRetries);
@@ -3043,7 +3043,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         }
 
         @Override
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
             super.init(conn, props);
         }
 
@@ -3122,8 +3122,8 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     public void testBug56955() throws Exception {
-        assertEquals("JKS", ((com.mysql.jdbc.Connection) this.conn).getTrustCertificateKeyStoreType());
-        assertEquals("JKS", ((com.mysql.jdbc.Connection) this.conn).getClientCertificateKeyStoreType());
+        assertEquals("JKS", ((com.mysql.mongo.jdbc.Connection) this.conn).getTrustCertificateKeyStoreType());
+        assertEquals("JKS", ((com.mysql.mongo.jdbc.Connection) this.conn).getClientCertificateKeyStoreType());
     }
 
     public void testBug57262() throws Exception {
@@ -3210,7 +3210,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             PrintStream printStream = new PrintStream(bOut);
             System.setErr(printStream);
 
-            ((com.mysql.jdbc.Connection) c).setStatementComment("Hi there");
+            ((com.mysql.mongo.jdbc.Connection) c).setStatementComment("Hi there");
             c.setAutoCommit(false);
 
             c.createStatement().execute("SELECT 1");
@@ -3271,12 +3271,12 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Statement testStmt = testConn.createStatement();
 
         for (int i = 0; i < 500; i++) {
-            ((com.mysql.jdbc.Connection) testConn).changeUser(props.getProperty(NonRegisteringDriver.USER_PROPERTY_KEY),
+            ((com.mysql.mongo.jdbc.Connection) testConn).changeUser(props.getProperty(NonRegisteringDriver.USER_PROPERTY_KEY),
                     props.getProperty(NonRegisteringDriver.PASSWORD_PROPERTY_KEY));
 
             if (i % 10 == 0) {
                 try {
-                    ((com.mysql.jdbc.Connection) testConn).changeUser("bubba", props.getProperty(NonRegisteringDriver.PASSWORD_PROPERTY_KEY));
+                    ((com.mysql.mongo.jdbc.Connection) testConn).changeUser("bubba", props.getProperty(NonRegisteringDriver.PASSWORD_PROPERTY_KEY));
                 } catch (SQLException sqlEx) {
                     if (versionMeetsMinimum(5, 6, 13)) {
                         assertTrue(testConn.isClosed());
@@ -3309,7 +3309,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             fail("Database " + dbName + " is not found.");
         }
 
-        ((com.mysql.jdbc.Connection) con).changeUser(props.getProperty(NonRegisteringDriver.USER_PROPERTY_KEY),
+        ((com.mysql.mongo.jdbc.Connection) con).changeUser(props.getProperty(NonRegisteringDriver.USER_PROPERTY_KEY),
                 props.getProperty(NonRegisteringDriver.PASSWORD_PROPERTY_KEY));
 
         this.rs = con.createStatement().executeQuery("select DATABASE()");
@@ -3325,7 +3325,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         try {
             newConn.close();
-            ((com.mysql.jdbc.Connection) newConn).changeUser(props.getProperty(NonRegisteringDriver.USER_PROPERTY_KEY),
+            ((com.mysql.mongo.jdbc.Connection) newConn).changeUser(props.getProperty(NonRegisteringDriver.USER_PROPERTY_KEY),
                     props.getProperty(NonRegisteringDriver.PASSWORD_PROPERTY_KEY));
             fail("Expected SQL Exception");
         } catch (SQLException ex) {
@@ -3367,7 +3367,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
             failoverConnection2 = getConnectionWithProps("jdbc:mysql://master:" + port + ",slave:" + port + "/", props);
 
-            assertTrue(((com.mysql.jdbc.Connection) failoverConnection1).isMasterConnection());
+            assertTrue(((com.mysql.mongo.jdbc.Connection) failoverConnection1).isMasterConnection());
 
             // Two different Connection objects should not equal each other:
             assertFalse(failoverConnection1.equals(failoverConnection2));
@@ -3384,7 +3384,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 }
             }
             // ensure we're now connected to the slave
-            assertFalse(((com.mysql.jdbc.Connection) failoverConnection1).isMasterConnection());
+            assertFalse(((com.mysql.mongo.jdbc.Connection) failoverConnection1).isMasterConnection());
 
             // ensure that hashCode() result is persistent across failover events when proxy state changes
             assertEquals(hc, failoverConnection1.hashCode());
@@ -3473,7 +3473,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 }
             }
 
-            props.setProperty("disabledAuthenticationPlugins", "com.mysql.jdbc.authentication.MysqlNativePasswordPlugin");
+            props.setProperty("disabledAuthenticationPlugins", "com.mysql.mongo.jdbc.authentication.MysqlNativePasswordPlugin");
             try {
                 testConn = getConnectionWithProps(props);
                 assertTrue("Exception is expected due to disabled defaultAuthenticationPlugin", false);
@@ -3499,7 +3499,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 }
             }
 
-            props.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.MysqlNativePasswordPlugin");
+            props.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.MysqlNativePasswordPlugin");
             props.setProperty("authenticationPlugins", "testsuite.regression.ConnectionRegressionTest$AuthTestPlugin");
             props.setProperty("disabledAuthenticationPlugins", "testsuite.regression.ConnectionRegressionTest$AuthTestPlugin");
             try {
@@ -3739,7 +3739,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         private String password = null;
 
-        public void init(com.mysql.jdbc.Connection conn1, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn1, Properties props) throws SQLException {
         }
 
         public void destroy() {
@@ -3778,7 +3778,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         private String password = null;
 
-        public void init(com.mysql.jdbc.Connection conn1, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn1, Properties props) throws SQLException {
         }
 
         public void destroy() {
@@ -3823,7 +3823,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         private String password = null;
         private int counter = 0;
 
-        public void init(com.mysql.jdbc.Connection conn1, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn1, Properties props) throws SQLException {
             this.counter = 0;
         }
 
@@ -3921,7 +3921,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             testConn.close();
 
             // connect with MysqlOldPasswordPlugin plugin
-            props.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.MysqlOldPasswordPlugin");
+            props.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.MysqlOldPasswordPlugin");
 
             props.setProperty("user", "bug64983user1");
             props.setProperty("password", "pwd");
@@ -4078,13 +4078,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     /**
      * This test requires two server instances:
-     * 1) main test server pointed by com.mysql.jdbc.testsuite.url variable configured without RSA encryption support (with sha256_password_private_key_path,
+     * 1) main test server pointed by com.mysql.mongo.jdbc.testsuite.url variable configured without RSA encryption support (with sha256_password_private_key_path,
      * sha256_password_public_key_path config options unset).
-     * 2) additional server instance pointed by com.mysql.jdbc.testsuite.url.sha256default variable configured with
+     * 2) additional server instance pointed by com.mysql.mongo.jdbc.testsuite.url.sha256default variable configured with
      * default-authentication-plugin=sha256_password and RSA encryption enabled.
      * 
      * To run this test please add this variable to ant call:
-     * -Dcom.mysql.jdbc.testsuite.url.sha256default=jdbc:mysql://localhost:3307/test?user=root&password=pwd
+     * -Dcom.mysql.mongo.jdbc.testsuite.url.sha256default=jdbc:mysql://localhost:3307/test?user=root&password=pwd
      * 
      * @throws Exception
      */
@@ -4207,10 +4207,10 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 assertCurrentUser(null, propsAllowRetrievalNoPassword, "wl5602nopassword", false);
 
                 // over SSL with client-default Sha256PasswordPlugin
-                propsNoRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
-                propsNoRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
-                propsAllowRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
-                propsAllowRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
+                propsNoRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
+                propsNoRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
+                propsAllowRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
+                propsAllowRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
 
                 assertCurrentUser(null, propsNoRetrieval, "wl5602user", true);
                 assertCurrentUser(null, propsNoRetrievalNoPassword, "wl5602nopassword", false);
@@ -4274,8 +4274,8 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 propsAllowRetrievalNoPassword.setProperty("allowPublicKeyRetrieval", "true");
 
                 // 1. with client-default MysqlNativePasswordPlugin
-                propsNoRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.MysqlNativePasswordPlugin");
-                propsAllowRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.MysqlNativePasswordPlugin");
+                propsNoRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.MysqlNativePasswordPlugin");
+                propsAllowRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.MysqlNativePasswordPlugin");
 
                 // 1.1. RSA
                 propsNoRetrieval.setProperty("useSSL", "false");
@@ -4305,10 +4305,10 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 assertCurrentUser(sha256Url, propsAllowRetrievalNoPassword, "wl5602nopassword", false);
 
                 // 2. with client-default Sha256PasswordPlugin
-                propsNoRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
-                propsNoRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
-                propsAllowRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
-                propsAllowRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
+                propsNoRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
+                propsNoRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
+                propsAllowRetrieval.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
+                propsAllowRetrievalNoPassword.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
 
                 // 2.1. RSA
                 propsNoRetrieval.setProperty("useSSL", "false");
@@ -4760,8 +4760,8 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     public static class TestBug64205StatementInterceptor extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods postProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, ResultSetInternalMethods originalResultSet,
-                com.mysql.jdbc.Connection connection, int warningCount, boolean noIndexUsed, boolean noGoodIndexUsed, SQLException statementException)
+        public ResultSetInternalMethods postProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, ResultSetInternalMethods originalResultSet,
+                com.mysql.mongo.jdbc.Connection connection, int warningCount, boolean noIndexUsed, boolean noGoodIndexUsed, SQLException statementException)
                 throws SQLException {
             if (sql.contains("lc_messages=ru_RU") && statementException == null) {
                 connection.createStatement().executeQuery("SELECT * FROM `" + connection.getCatalog() + "`.`\u307b\u3052\u307b\u3052`");
@@ -4920,7 +4920,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Statement stmt1 = conn1.createStatement();
 
         int updateCount = stmt1.executeUpdate("LOAD DATA LOCAL INFILE '" + fileNameBuf.toString() + "' INTO TABLE testBug11237 CHARACTER SET "
-                + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) this.conn).getEncoding(), (com.mysql.jdbc.Connection) conn1));
+                + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) this.conn).getEncoding(), (com.mysql.mongo.jdbc.Connection) conn1));
 
         assertTrue(updateCount == loops);
     }
@@ -5222,9 +5222,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Class<?> jcls = failoverconnection[0].getClass(); // the driver-level connection, a Proxy in this case...
         ClassLoader jcl = jcls.getClassLoader();
         if (jcl != null) {
-            mysqlCls = jcl.loadClass("com.mysql.jdbc.Connection");
+            mysqlCls = jcl.loadClass("com.mysql.mongo.jdbc.Connection");
         } else {
-            mysqlCls = Class.forName("com.mysql.jdbc.Connection", true, null);
+            mysqlCls = Class.forName("com.mysql.mongo.jdbc.Connection", true, null);
         }
 
         if ((mysqlCls != null) && (mysqlCls.isAssignableFrom(jcls))) {
@@ -5232,7 +5232,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             boolean hasAbortMethod = abort != null;
             assertTrue("abortInternal() method should be found for connection class " + jcls, hasAbortMethod);
         } else {
-            fail("com.mysql.jdbc.Connection interface IS NOT ASSIGNABE from connection class " + jcls);
+            fail("com.mysql.mongo.jdbc.Connection interface IS NOT ASSIGNABE from connection class " + jcls);
         }
         //-------------
 
@@ -5538,7 +5538,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                     } else if (this.num == 8 || this.num == 11) {
                         Proxy.getInvocationHandler(this.c).invoke(this.c, MySQLConnection.class.getMethod("abortInternal", new Class[] {}), null);
                     } else if (this.num == 9 || this.num == 12) {
-                        Proxy.getInvocationHandler(this.c).invoke(this.c, com.mysql.jdbc.Connection.class.getMethod("abort", new Class[] { Executor.class }),
+                        Proxy.getInvocationHandler(this.c).invoke(this.c, com.mysql.mongo.jdbc.Connection.class.getMethod("abort", new Class[] { Executor.class }),
                                 new Object[] { new ThreadPerTaskExecutor() });
                     }
 
@@ -5566,9 +5566,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
      */
     public void testBug68400() throws Exception {
 
-        Field f = com.mysql.jdbc.AbandonedConnectionCleanupThread.class.getDeclaredField("connectionFinalizerPhantomRefs");
+        Field f = com.mysql.mongo.jdbc.AbandonedConnectionCleanupThread.class.getDeclaredField("connectionFinalizerPhantomRefs");
         f.setAccessible(true);
-        Map<?, ?> connectionTrackingMap = (Map<?, ?>) f.get(com.mysql.jdbc.NonRegisteringDriver.class);
+        Map<?, ?> connectionTrackingMap = (Map<?, ?>) f.get(com.mysql.mongo.jdbc.NonRegisteringDriver.class);
 
         Field referentField = java.lang.ref.Reference.class.getDeclaredField("referent");
         referentField.setAccessible(true);
@@ -5673,7 +5673,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             if (finType == 1) {
                 connection.close();
             } else if (finType == 2) {
-                ((com.mysql.jdbc.Connection) connection).abortInternal();
+                ((com.mysql.mongo.jdbc.Connection) connection).abortInternal();
             }
             connection = null;
         }
@@ -5703,7 +5703,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     private int countTestConnections(Map<?, ?> connectionTrackingMap, Field referentField, boolean show, String attributValue) throws Exception {
         int connectionNumber = 0;
         for (Object o1 : connectionTrackingMap.keySet()) {
-            com.mysql.jdbc.Connection ctmp = (com.mysql.jdbc.Connection) referentField.get(o1);
+            com.mysql.mongo.jdbc.Connection ctmp = (com.mysql.mongo.jdbc.Connection) referentField.get(o1);
             try {
                 if (ctmp != null && ctmp.getConnectionAttributes() != null && ctmp.getConnectionAttributes().equals(attributValue)) {
                     connectionNumber++;
@@ -5926,7 +5926,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * default-authentication-plugin=sha256_password and RSA encryption enabled.
      * 
      * To run this test please add this variable to ant call:
-     * -Dcom.mysql.jdbc.testsuite.url.sha256default=jdbc:mysql://localhost:3307/test?user=root&password=pwd
+     * -Dcom.mysql.mongo.jdbc.testsuite.url.sha256default=jdbc:mysql://localhost:3307/test?user=root&password=pwd
      * 
      * @throws Exception
      */
@@ -5970,7 +5970,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                 props.setProperty("user", "wl6134user");
                 props.setProperty("password", pwd);
-                props.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
+                props.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
                 props.setProperty("useSSL", "false");
 
                 Connection testConn = null;
@@ -6019,15 +6019,15 @@ public class ConnectionRegressionTest extends BaseTestCase {
     public void testBug69452() throws Exception {
         String[][] testMemUnits = new String[][] { { "k", "kb", "kB", "K", "Kb", "KB" }, { "m", "mb", "mB", "M", "Mb", "MB" },
                 { "g", "gb", "gB", "G", "Gb", "GB" } };
-        com.mysql.jdbc.Connection connWithMemProps;
+        com.mysql.mongo.jdbc.Connection connWithMemProps;
         long[] memMultiplier = new long[] { 1024, 1024 * 1024, 1024 * 1024 * 1024 };
 
         // reflection is needed to access protected info from ConnectionPropertiesImpl.largeRowSizeThreshold
-        Field propField = com.mysql.jdbc.ConnectionPropertiesImpl.class.getDeclaredField("largeRowSizeThreshold");
+        Field propField = com.mysql.mongo.jdbc.ConnectionPropertiesImpl.class.getDeclaredField("largeRowSizeThreshold");
         propField.setAccessible(true);
         Class<?> propClass = null;
-        for (Class<?> nestedClass : com.mysql.jdbc.ConnectionPropertiesImpl.class.getDeclaredClasses()) {
-            if (nestedClass.getName().equals("com.mysql.jdbc.ConnectionPropertiesImpl$IntegerConnectionProperty")) {
+        for (Class<?> nestedClass : com.mysql.mongo.jdbc.ConnectionPropertiesImpl.class.getDeclaredClasses()) {
+            if (nestedClass.getName().equals("com.mysql.mongo.jdbc.ConnectionPropertiesImpl$IntegerConnectionProperty")) {
                 propClass = nestedClass;
                 break;
             }
@@ -6040,7 +6040,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             for (int i = 0; i < testMemUnits.length; i++) {
                 for (int j = 0; j < testMemUnits[i].length; j++) {
                     // testing with memory values under 2GB because higher values aren't supported.
-                    connWithMemProps = (com.mysql.jdbc.Connection) getConnectionWithProps(
+                    connWithMemProps = (com.mysql.mongo.jdbc.Connection) getConnectionWithProps(
                             String.format("blobSendChunkSize=1.2%1$s,largeRowSizeThreshold=1.4%1$s,locatorFetchBufferSize=1.6%1$s", testMemUnits[i][j]));
 
                     // test values of property 'blobSendChunkSize'
@@ -6243,7 +6243,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         int cnt = 0;
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (sql.contains("SHOW COLLATION")) {
                 this.cnt++;
@@ -6389,14 +6389,14 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         private int counter = 0;
 
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
             this.counter++;
         }
 
         public void destroy() {
         }
 
-        public SQLException interceptException(SQLException sqlEx, com.mysql.jdbc.Connection conn) {
+        public SQLException interceptException(SQLException sqlEx, com.mysql.mongo.jdbc.Connection conn) {
 
             return new SQLException("ExceptionInterceptor.init() called " + this.counter + " time(s)");
         }
@@ -6423,13 +6423,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     public static class TestBug67803ExceptionInterceptor implements ExceptionInterceptor {
 
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
         }
 
         public void destroy() {
         }
 
-        public SQLException interceptException(SQLException sqlEx, com.mysql.jdbc.Connection conn) {
+        public SQLException interceptException(SQLException sqlEx, com.mysql.mongo.jdbc.Connection conn) {
             if (sqlEx.getErrorCode() == 1295 || sqlEx.getMessage().contains("This command is not supported in the prepared statement protocol yet")) {
                 // SQLException will not be re-thrown if emulateUnsupportedPstmts=true, thus throw RuntimeException to fail the test
                 throw new RuntimeException(sqlEx);
@@ -6468,7 +6468,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      */
     public static class Bug72712StatementInterceptor extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (sql.contains("SET NAMES") || sql.contains("character_set_results") && !(sql.contains("SHOW VARIABLES") || sql.contains("SELECT  @@"))) {
                 throw new SQLException("Wrongt statement issued: " + sql);
@@ -6535,7 +6535,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * default-authentication-plugin=sha256_password and RSA encryption enabled.
      * 
      * To run this test please add this variable to ant call:
-     * -Dcom.mysql.jdbc.testsuite.url.sha256default=jdbc:mysql://localhost:3307/test?user=root&password=pwd
+     * -Dcom.mysql.mongo.jdbc.testsuite.url.sha256default=jdbc:mysql://localhost:3307/test?user=root&password=pwd
      * 
      * @throws Exception
      */
@@ -6575,13 +6575,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 Properties props = new Properties();
                 props.setProperty("allowPublicKeyRetrieval", "true");
 
-                props.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.MysqlNativePasswordPlugin");
+                props.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.MysqlNativePasswordPlugin");
                 props.setProperty("useCompression", "false");
                 testBug18869381WithProperties(props);
                 props.setProperty("useCompression", "true");
                 testBug18869381WithProperties(props);
 
-                props.setProperty("defaultAuthenticationPlugin", "com.mysql.jdbc.authentication.Sha256PasswordPlugin");
+                props.setProperty("defaultAuthenticationPlugin", "com.mysql.mongo.jdbc.authentication.Sha256PasswordPlugin");
                 props.setProperty("useCompression", "false");
                 testBug18869381WithProperties(props);
                 props.setProperty("useCompression", "true");
@@ -7172,7 +7172,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     public static class Bug75168LoadBalanceExceptionChecker implements LoadBalanceExceptionChecker {
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
         }
 
         public void destroy() {
@@ -7194,13 +7194,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
         }
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (sql == null) {
                 sql = "";
             }
-            if (sql.length() == 0 && interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
-                sql = ((com.mysql.jdbc.PreparedStatement) interceptedStatement).asSql();
+            if (sql.length() == 0 && interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
+                sql = ((com.mysql.mongo.jdbc.PreparedStatement) interceptedStatement).asSql();
             }
             if (sql.indexOf("nonexistent_table") >= 0) {
                 assertTrue("Different connection expected.", !connection.equals(previousConnection));
@@ -7657,7 +7657,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      */
     public static class Bug75592StatementInterceptor extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (sql.contains("SHOW VARIABLES WHERE")) {
                 throw new SQLException("'SHOW VARIABLES WHERE' statement issued: " + sql);
@@ -7673,7 +7673,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * 1. Default connection string points to a server configured with both SSL *and* RSA encryption.
      * or
      * 2. Default connection string points to a server configured with SSL enabled but no RSA encryption *and* the property
-     * com.mysql.jdbc.testsuite.url.sha256default points to an additional server configured with
+     * com.mysql.mongo.jdbc.testsuite.url.sha256default points to an additional server configured with
      * default-authentication-plugin=sha256_password and RSA encryption.
      * 
      * If none of the servers has SSL and RSA encryption enabled then only 'mysql_native_password' and 'mysql_old_password' plugins are tested.
@@ -7697,7 +7697,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         }
 
         for (String testDbUrl : testDbUrls) {
-            com.mysql.jdbc.Connection testConn = (com.mysql.jdbc.Connection) getConnectionWithProps(testDbUrl, props);
+            com.mysql.mongo.jdbc.Connection testConn = (com.mysql.mongo.jdbc.Connection) getConnectionWithProps(testDbUrl, props);
             Statement testStmt = testConn.createStatement();
 
             this.rs = testStmt.executeQuery("SELECT @@GLOBAL.HAVE_SSL = 'YES' AS have_ssl");
@@ -7794,14 +7794,14 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     private void testBug20825727CreateUser(String testDbUrl, String user, String password, String encoding, String pluginName, int pwdHashingMethod)
             throws SQLException {
-        com.mysql.jdbc.Connection testConn = null;
+        com.mysql.mongo.jdbc.Connection testConn = null;
         try {
             Properties props = new Properties();
             props.setProperty("allowPublicKeyRetrieval", "true");
             if (encoding.length() > 0) {
                 props.setProperty("characterEncoding", encoding);
             }
-            testConn = (com.mysql.jdbc.Connection) getConnectionWithProps(testDbUrl, props);
+            testConn = (com.mysql.mongo.jdbc.Connection) getConnectionWithProps(testDbUrl, props);
             Statement testStmt = testConn.createStatement();
 
             if (testConn.versionMeetsMinimum(5, 7, 6)) {
@@ -7831,14 +7831,14 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     private void testBug20825727ChangePassword(String testDbUrl, String user, String password, String encoding, String pluginName, int pwdHashingMethod)
             throws SQLException {
-        com.mysql.jdbc.Connection testConn = null;
+        com.mysql.mongo.jdbc.Connection testConn = null;
         try {
             Properties props = new Properties();
             props.setProperty("allowPublicKeyRetrieval", "true");
             if (encoding.length() > 0) {
                 props.setProperty("characterEncoding", encoding);
             }
-            testConn = (com.mysql.jdbc.Connection) getConnectionWithProps(testDbUrl, props);
+            testConn = (com.mysql.mongo.jdbc.Connection) getConnectionWithProps(testDbUrl, props);
             Statement testStmt = testConn.createStatement();
 
             if (testConn.versionMeetsMinimum(5, 7, 6)) {
@@ -7870,7 +7870,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             String password, String encoding, String pluginName) throws SQLException {
         final Properties props = new Properties();
         props.setProperty("allowPublicKeyRetrieval", "true");
-        final com.mysql.jdbc.MySQLConnection testBaseConn = (com.mysql.jdbc.MySQLConnection) getConnectionWithProps(testDbUrl, props);
+        final com.mysql.mongo.jdbc.MySQLConnection testBaseConn = (com.mysql.mongo.jdbc.MySQLConnection) getConnectionWithProps(testDbUrl, props);
         final boolean pwdIsComplex = !Charset.forName("US-ASCII").newEncoder().canEncode(password);
 
         for (String encProp : encoding.length() == 0 ? new String[] { "*none*" } : new String[] { "characterEncoding", "passwordCharacterEncoding" }) {
@@ -7914,7 +7914,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                     case 3:
                         /*
                          * Test with an RSA encryption enabled connection, using public key retrieved from server.
-                         * Requires additional server instance pointed by 'com.mysql.jdbc.testsuite.url.sha256default'.
+                         * Requires additional server instance pointed by 'com.mysql.mongo.jdbc.testsuite.url.sha256default'.
                          * Can't be used with plugin 'cleartext_plugin_server'.
                          */
                         if (pluginName.equals("cleartext_plugin_server") || !rsaEnabled) {
@@ -7927,7 +7927,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                     case 4:
                         /*
                          * Test with an RSA encryption enabled connection, using public key pointed by the property 'serverRSAPublicKeyFile'.
-                         * Requires additional server instance pointed by 'com.mysql.jdbc.testsuite.url.sha256default'.
+                         * Requires additional server instance pointed by 'com.mysql.mongo.jdbc.testsuite.url.sha256default'.
                          * Can't be used with plugin 'cleartext_plugin_server'.
                          */
                         if (pluginName.equals("cleartext_plugin_server") || !rsaEnabled) {
@@ -7992,7 +7992,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     /**
      * Tests fix for BUG#75670 - Connection fails with "Public Key Retrieval is not allowed" for native auth.
      * 
-     * Requires additional server instance pointed by com.mysql.jdbc.testsuite.url.sha256default variable configured with
+     * Requires additional server instance pointed by com.mysql.mongo.jdbc.testsuite.url.sha256default variable configured with
      * default-authentication-plugin=sha256_password and RSA encryption enabled.
      * 
      * @throws Exception
@@ -8092,7 +8092,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                                     // change user using same credentials will succeed
                                     System.out.printf("%25s : %-18s : %-25s : %-25s : %s%n", "| ChangeUser (same)", allowPubKeyRetrieval, user, pwd, "Ok");
-                                    ((com.mysql.jdbc.Connection) testConn).changeUser(user, user);
+                                    ((com.mysql.mongo.jdbc.Connection) testConn).changeUser(user, user);
                                     testStmt = testConn.createStatement();
                                     this.rs = testStmt.executeQuery("SELECT USER(), CURRENT_USER()");
                                     assertTrue(this.rs.next());
@@ -8112,13 +8112,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
                                         // change user will fail due to public key retrieval failure
                                         assertThrows(SQLException.class, "Public Key Retrieval is not allowed", new Callable<Void>() {
                                             public Void call() throws Exception {
-                                                ((com.mysql.jdbc.Connection) testConn).changeUser(swapUser, swapUser);
+                                                ((com.mysql.mongo.jdbc.Connection) testConn).changeUser(swapUser, swapUser);
                                                 return null;
                                             }
                                         });
                                     } else {
                                         // change user will succeed
-                                        ((com.mysql.jdbc.Connection) testConn).changeUser(swapUser, swapUser);
+                                        ((com.mysql.mongo.jdbc.Connection) testConn).changeUser(swapUser, swapUser);
                                         testStmt = testConn.createStatement();
                                         this.rs = testStmt.executeQuery("SELECT USER(), CURRENT_USER()");
                                         assertTrue(this.rs.next());
@@ -8282,7 +8282,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         private boolean useSyncGroupServersLock = true;
 
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
             if (props.containsKey("__useReplConnGroupLocks__")) {
                 this.useSyncGroupServersLock = Boolean.parseBoolean(props.getProperty("__useReplConnGroupLocks__"));
             }
@@ -8291,7 +8291,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         public void destroy() {
         }
 
-        public SQLException interceptException(SQLException sqlEx, com.mysql.jdbc.Connection conn) {
+        public SQLException interceptException(SQLException sqlEx, com.mysql.mongo.jdbc.Connection conn) {
             // Make sure both threads execute the code after the synchronized block concurrently.
             synchronized (TestBug21934573ExceptionInterceptor.class) {
                 if (threadIsWaiting) {
@@ -8306,7 +8306,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 }
             }
 
-            com.mysql.jdbc.ReplicationConnectionGroup replConnGrp = ReplicationConnectionGroupManager.getConnectionGroup("deadlock");
+            com.mysql.mongo.jdbc.ReplicationConnectionGroup replConnGrp = ReplicationConnectionGroupManager.getConnectionGroup("deadlock");
             if (!this.useSyncGroupServersLock || replConnGroupLocks.add(replConnGrp.getGroupName())) {
                 try {
                     System.out.println("Emulating syncing state in: " + replConnGrp + " on thread " + Thread.currentThread().getName() + ".");
@@ -8523,7 +8523,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     public static class Bug56100StatementInterceptor extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (sql.contains("<HOST_NAME>")) {
                 return (ResultSetInternalMethods) interceptedStatement.executeQuery(sql.replace("<HOST_NAME>", connection.getHost()));
@@ -8535,8 +8535,8 @@ public class ConnectionRegressionTest extends BaseTestCase {
     /**
      * Tests fix for WL#8196, Support for TLSv1.2 Protocol.
      * 
-     * This test requires community server (preferably compiled with yaSSL) in -Dcom.mysql.jdbc.testsuite.url and commercial server (with OpenSSL) in
-     * -Dcom.mysql.jdbc.testsuite.url.sha256default
+     * This test requires community server (preferably compiled with yaSSL) in -Dcom.mysql.mongo.jdbc.testsuite.url and commercial server (with OpenSSL) in
+     * -Dcom.mysql.mongo.jdbc.testsuite.url.sha256default
      * 
      * Test certificates from testsuite/ssl-test-certs must be installed on both servers.
      */
@@ -8608,8 +8608,8 @@ public class ConnectionRegressionTest extends BaseTestCase {
      * of TLSv1, TLSv1.1, or TLSv1.2 (comma-separated, no spaces), the default behavior restricting the TLS version based on JRE and MySQL Server version is
      * bypassed to enable or restrict specific TLS versions.
      * 
-     * This test requires community server (preferably compiled with yaSSL) in -Dcom.mysql.jdbc.testsuite.url and commercial server (with OpenSSL) in
-     * -Dcom.mysql.jdbc.testsuite.url.sha256default
+     * This test requires community server (preferably compiled with yaSSL) in -Dcom.mysql.mongo.jdbc.testsuite.url and commercial server (with OpenSSL) in
+     * -Dcom.mysql.mongo.jdbc.testsuite.url.sha256default
      * 
      * Test certificates from testsuite/ssl-test-certs must be installed on both servers.
      */
@@ -9152,7 +9152,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Connection testConn = getUnreliableLoadBalancedConnection(new String[] { host1, host2, host3 }, props);
         testConn.setAutoCommit(false);
 
-        String connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+        String connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
         assertConnectionsHistory(UnreliableSocketFactory.getHostConnectedStatus(connectedHost));
 
         assertEquals(3, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
@@ -9168,7 +9168,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         String removedHost = connectedHost.equals(host3) ? host2 : host3;
         String removedHostPort = removedHost + ":" + defaultPort;
         ConnectionGroupManager.removeHost(lbConnGroup, removedHostPort, true);
-        assertEquals(connectedHost, ((com.mysql.jdbc.MySQLConnection) testConn).getHost()); // Still connected to the initital host.
+        assertEquals(connectedHost, ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost()); // Still connected to the initital host.
         assertEquals(2, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort1));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort2) ^ removedHostPort.equals(hostPort2)); // Only one can be true.
@@ -9178,7 +9178,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         int connectionSwaps = 0;
         for (int i = 0; i < 100; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             assertFalse(newConnectedHost.equals(removedHost));
             if (!connectedHost.equals(newConnectedHost)) {
                 connectedHost = newConnectedHost;
@@ -9204,9 +9204,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
         String newHost = removedHost;
         connectionSwaps = 0;
         int attemptsLeft = 100;
-        while (!(connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
+        while (!(connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             if (!connectedHost.equals(newConnectedHost)) {
                 connectedHost = newConnectedHost;
                 connectionSwaps++;
@@ -9236,9 +9236,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
         newHost = host4;
         connectionSwaps = 0;
         attemptsLeft = 100;
-        while (!(connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
+        while (!(connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             if (!connectedHost.equals(newConnectedHost)) {
                 connectedHost = newConnectedHost;
                 connectionSwaps++;
@@ -9262,7 +9262,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         String removedHost2 = connectedHost.equals(host4) ? host3 : host4;
         String removedHostPort2 = removedHost2 + ":" + defaultPort;
         ConnectionGroupManager.removeHost(lbConnGroup, removedHostPort2, true);
-        assertEquals(connectedHost, ((com.mysql.jdbc.MySQLConnection) testConn).getHost()); // Still connected to the same host.
+        assertEquals(connectedHost, ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost()); // Still connected to the same host.
         assertEquals(2, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort1) ^ removedHostPort1.equals(hostPort1));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort2) ^ removedHostPort1.equals(hostPort2));
@@ -9273,7 +9273,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         connectionSwaps = 0;
         for (int i = 0; i < 100; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             assertFalse(newConnectedHost.equals(removedHost1));
             assertFalse(newConnectedHost.equals(removedHost2));
             if (!connectedHost.equals(newConnectedHost)) {
@@ -9316,7 +9316,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Connection testConn = getUnreliableLoadBalancedConnection(new String[] { host1, host2, host3 }, props);
         testConn.setAutoCommit(false);
 
-        String connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+        String connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
         assertConnectionsHistory(UnreliableSocketFactory.getHostConnectedStatus(connectedHost));
 
         assertEquals(3, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
@@ -9333,7 +9333,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         String removedHost = connectedHost;
         String removedHostPort = removedHost + ":" + defaultPort;
         ConnectionGroupManager.removeHost(lbConnGroup, removedHostPort, true);
-        assertFalse(((com.mysql.jdbc.MySQLConnection) testConn).getHost().equals(connectedHost)); // No longer connected to the removed host.
+        assertFalse(((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost().equals(connectedHost)); // No longer connected to the removed host.
         assertEquals(2, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort1) ^ removedHostPort.equals(hostPort1)); // Only one can be true.
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort2) ^ removedHostPort.equals(hostPort2));
@@ -9344,7 +9344,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         int connectionSwaps = 0;
         for (int i = 0; i < 100; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             assertFalse(newConnectedHost.equals(removedHost));
             if (!connectedHost.equals(newConnectedHost)) {
                 connectedHost = newConnectedHost;
@@ -9370,9 +9370,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
         String newHost = removedHost;
         connectionSwaps = 0;
         int attemptsLeft = 100;
-        while (!(connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
+        while (!(connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             if (!connectedHost.equals(newConnectedHost)) {
                 connectedHost = newConnectedHost;
                 connectionSwaps++;
@@ -9402,9 +9402,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
         newHost = host4;
         connectionSwaps = 0;
         attemptsLeft = 100;
-        while (!(connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
+        while (!(connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost()).equals(newHost)) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             if (!connectedHost.equals(newConnectedHost)) {
                 connectedHost = newConnectedHost;
                 connectionSwaps++;
@@ -9429,8 +9429,8 @@ public class ConnectionRegressionTest extends BaseTestCase {
         String removedHost2 = connectedHost.equals(host3) ? host3 : host4;
         String removedHostPort2 = removedHost2 + ":" + defaultPort;
         ConnectionGroupManager.removeHost(lbConnGroup, removedHostPort2, true);
-        assertFalse(((com.mysql.jdbc.MySQLConnection) testConn).getHost().equals(removedHost1)); // Not connected to the first removed host.
-        assertFalse(((com.mysql.jdbc.MySQLConnection) testConn).getHost().equals(removedHost2)); // Not connected to the second removed host.
+        assertFalse(((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost().equals(removedHost1)); // Not connected to the first removed host.
+        assertFalse(((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost().equals(removedHost2)); // Not connected to the second removed host.
         assertEquals(2, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort1) ^ removedHostPort1.equals(hostPort1));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort2) ^ removedHostPort1.equals(hostPort2));
@@ -9441,7 +9441,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         connectionSwaps = 0;
         for (int i = 0; i < 100; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             assertFalse(newConnectedHost.equals(removedHost1));
             assertFalse(newConnectedHost.equals(removedHost2));
             if (!connectedHost.equals(newConnectedHost)) {
@@ -9485,7 +9485,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Connection testConn = getUnreliableLoadBalancedConnection(new String[] { host1, host2, host3, host4 }, props);
         testConn.setAutoCommit(false);
 
-        String connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+        String connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
         assertConnectionsHistory(UnreliableSocketFactory.getHostConnectedStatus(connectedHost));
 
         assertEquals(4, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
@@ -9501,7 +9501,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         String removedHost2 = connectedHost.equals(host3) ? host3 : host4;
         String removedHostPort2 = removedHost2 + ":" + defaultPort;
         ConnectionGroupManager.removeHost(lbConnGroup, removedHostPort2, false);
-        assertEquals(connectedHost, ((com.mysql.jdbc.MySQLConnection) testConn).getHost()); // Still connected to the same host.
+        assertEquals(connectedHost, ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost()); // Still connected to the same host.
         assertEquals(2, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort1) ^ removedHostPort1.equals(hostPort1)); // Only one can be true.
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort2) ^ removedHostPort1.equals(hostPort2));
@@ -9513,7 +9513,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Set<String> hostsUsed = new HashSet<String>();
         for (int i = 0; i < 100 && hostsUsed.size() < 4; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             if (!connectedHost.equals(newConnectedHost)) {
                 hostsUsed.add(newConnectedHost);
                 connectedHost = newConnectedHost;
@@ -9536,11 +9536,11 @@ public class ConnectionRegressionTest extends BaseTestCase {
         testConn = getUnreliableLoadBalancedConnection(new String[] { host1, host2, host3, host4 }, props);
         testConn.setAutoCommit(false);
 
-        connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+        connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
         assertConnectionsHistory(UnreliableSocketFactory.getHostConnectedStatus(connectedHost));
 
-        assertFalse(((com.mysql.jdbc.MySQLConnection) testConn).getHost().equals(removedHost1)); // Not connected to the removed host.
-        assertFalse(((com.mysql.jdbc.MySQLConnection) testConn).getHost().equals(removedHost2)); // Not connected to the removed host.
+        assertFalse(((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost().equals(removedHost1)); // Not connected to the removed host.
+        assertFalse(((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost().equals(removedHost2)); // Not connected to the removed host.
         assertEquals(2, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort1) ^ removedHostPort1.equals(hostPort1));
         assertTrue(ConnectionGroupManager.getActiveHostLists(lbConnGroup).contains(hostPort2) ^ removedHostPort1.equals(hostPort2));
@@ -9551,7 +9551,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         connectionSwaps = 0;
         for (int i = 0; i < 100; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             assertFalse(newConnectedHost.equals(removedHost1));
             assertFalse(newConnectedHost.equals(removedHost2));
             if (!connectedHost.equals(newConnectedHost)) {
@@ -9596,7 +9596,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Connection testConn = getUnreliableLoadBalancedConnection(new String[] { host1, host2 }, props);
         testConn.setAutoCommit(false);
 
-        String connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+        String connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
         assertConnectionsHistory(UnreliableSocketFactory.getHostConnectedStatus(connectedHost));
 
         assertEquals(2, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
@@ -9618,7 +9618,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         int connectionSwaps = 0;
         for (int i = 0; i < 100; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             assertFalse(newConnectedHost.equals(host3));
             assertFalse(newConnectedHost.equals(host4));
             if (!connectedHost.equals(newConnectedHost)) {
@@ -9641,7 +9641,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         testConn = getUnreliableLoadBalancedConnection(new String[] { host1, host2, host3, host4 }, props);
         testConn.setAutoCommit(false);
 
-        connectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+        connectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
         assertConnectionsHistory(UnreliableSocketFactory.getHostConnectedStatus(connectedHost));
 
         assertEquals(4, ConnectionGroupManager.getActiveHostCount(lbConnGroup));
@@ -9655,7 +9655,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         Set<String> hostsUsed = new HashSet<String>();
         for (int i = 0; i < 100 && hostsUsed.size() < 4; i++) {
             testConn.rollback();
-            String newConnectedHost = ((com.mysql.jdbc.MySQLConnection) testConn).getHost();
+            String newConnectedHost = ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost();
             if (!connectedHost.equals(newConnectedHost)) {
                 hostsUsed.add(newConnectedHost);
                 connectedHost = newConnectedHost;
@@ -10298,7 +10298,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
     /**
      * This test requires two server instances:
-     * 1) main test server pointed to by the com.mysql.jdbc.testsuite.url variable, configured without RSA encryption support
+     * 1) main test server pointed to by the com.mysql.mongo.jdbc.testsuite.url variable, configured without RSA encryption support
      * 2) additional server instance pointed to by the com.mysql.cj.testsuite.url.openssl variable, configured with
      * default-authentication-plugin=sha256_password, RSA encryption enabled, and server configuration options
      * "caching_sha2_password_private_key_path" and "caching_sha2_password_public_key_path" are set to the same values
@@ -10818,21 +10818,21 @@ public class ConnectionRegressionTest extends BaseTestCase {
     public static class Bug88227StatementInterceptor implements StatementInterceptorV2 {
         public static boolean mayHaveWarnings = true;
 
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
         }
 
         public boolean executeTopLevelOnly() {
             return false;
         }
 
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             assertFalse("Unexpected [SHOW WARNINGS] was issued", sql.contains("SHOW WARNINGS"));
             return null;
         }
 
-        public ResultSetInternalMethods postProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, ResultSetInternalMethods originalResultSet,
-                com.mysql.jdbc.Connection connection, int warningCount, boolean noIndexUsed, boolean noGoodIndexUsed, SQLException statementException)
+        public ResultSetInternalMethods postProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, ResultSetInternalMethods originalResultSet,
+                com.mysql.mongo.jdbc.Connection connection, int warningCount, boolean noIndexUsed, boolean noGoodIndexUsed, SQLException statementException)
                 throws SQLException {
             if (!mayHaveWarnings) {
                 assertEquals("Warnings while executing [" + sql + "]", 0, warningCount);
@@ -11088,7 +11088,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         int cnt = 0;
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             System.out.println(sql);
             if (sql.contains("SHOW PROCESSLIST")) {
@@ -11213,7 +11213,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         testBug23143279RunTest("random");
         testBug23143279RunTest("bestResponseTime");
         testBug23143279RunTest("serverAffinity");
-        testBug23143279RunTest("com.mysql.jdbc.SequentialBalanceStrategy");
+        testBug23143279RunTest("com.mysql.mongo.jdbc.SequentialBalanceStrategy");
     }
 
     private void testBug23143279RunTest(String lbStrategy) throws Exception {

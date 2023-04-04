@@ -35,8 +35,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import com.mysql.jdbc.DatabaseMetaDataUsingInfoSchema;
-import com.mysql.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.DatabaseMetaDataUsingInfoSchema;
+import com.mysql.mongo.jdbc.StringUtils;
 
 import testsuite.BaseTestCase;
 
@@ -553,7 +553,7 @@ public class MetadataTest extends BaseTestCase {
      * Tests the implementation of Information Schema for column privileges.
      */
     public void testGetColumnPrivilegesUsingInfoSchema() throws Exception {
-        String dontRunPropertyName = "com.mysql.jdbc.testsuite.cantGrant";
+        String dontRunPropertyName = "com.mysql.mongo.jdbc.testsuite.cantGrant";
 
         if (!runTestIfSysPropDefined(dontRunPropertyName)) {
             if (versionMeetsMinimum(5, 0, 7)) {

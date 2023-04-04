@@ -27,8 +27,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.mysql.fabric.jdbc.FabricMySQLConnection;
-import com.mysql.fabric.jdbc.FabricMySQLDataSource;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLConnection;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLDataSource;
 
 import testsuite.fabric.BaseFabricTestCase;
 
@@ -38,7 +38,7 @@ import testsuite.fabric.BaseFabricTestCase;
 public class TestHABasics extends BaseFabricTestCase {
     private FabricMySQLDataSource ds;
     private FabricMySQLConnection conn;
-    private String masterPort = System.getProperty("com.mysql.fabric.testsuite.global.port");
+    private String masterPort = System.getProperty("com.mysql.mongo.fabric.testsuite.global.port");
 
     public TestHABasics() throws Exception {
         super();

@@ -55,16 +55,16 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.ConnectionProperties;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.ResultSetInternalMethods;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.TimeUtil;
-import com.mysql.jdbc.Util;
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.ConnectionProperties;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.ResultSetInternalMethods;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.TimeUtil;
+import com.mysql.mongo.jdbc.Util;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
 
 import testsuite.BaseStatementInterceptor;
 import testsuite.BaseTestCase;
@@ -107,12 +107,12 @@ public class ConnectionTest extends BaseTestCase {
 
     /**
      * Tests a cluster connection for failover, requires a two-node cluster URL
-     * specfied in com.mysql.jdbc.testsuite.ClusterUrl system proeprty.
+     * specfied in com.mysql.mongo.jdbc.testsuite.ClusterUrl system proeprty.
      * 
      * @throws Exception
      */
     public void testClusterConnection() throws Exception {
-        String url = System.getProperty("com.mysql.jdbc.testsuite.ClusterUrl");
+        String url = System.getProperty("com.mysql.mongo.jdbc.testsuite.ClusterUrl");
 
         if ((url != null) && (url.length() > 0)) {
             Object versionNumObj = getSingleValueWithQuery("SHOW VARIABLES LIKE 'version'");
@@ -672,7 +672,7 @@ public class ConnectionTest extends BaseTestCase {
         }
 
         try {
-            ((com.mysql.jdbc.Connection) dumpConn).clientPrepareStatement(bogusSQL).executeQuery();
+            ((com.mysql.mongo.jdbc.Connection) dumpConn).clientPrepareStatement(bogusSQL).executeQuery();
         } catch (SQLException sqlEx) {
             assertTrue(sqlEx.getMessage().indexOf(bogusSQL) != -1);
         }
@@ -740,7 +740,7 @@ public class ConnectionTest extends BaseTestCase {
         Statement loadStmt = loadConn.createStatement();
 
         String charset = " CHARACTER SET "
-                + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) loadConn).getEncoding(), (com.mysql.jdbc.Connection) loadConn);
+                + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) loadConn).getEncoding(), (com.mysql.mongo.jdbc.Connection) loadConn);
 
         try {
             loadStmt.executeQuery("LOAD DATA LOCAL INFILE '" + url + "' INTO TABLE testLocalInfileWithUrl" + charset);
@@ -1049,11 +1049,11 @@ public class ConnectionTest extends BaseTestCase {
     public void testPing() throws SQLException {
         Connection conn2 = getConnectionWithProps((String) null);
 
-        ((com.mysql.jdbc.Connection) conn2).ping();
+        ((com.mysql.mongo.jdbc.Connection) conn2).ping();
         conn2.close();
 
         try {
-            ((com.mysql.jdbc.Connection) conn2).ping();
+            ((com.mysql.mongo.jdbc.Connection) conn2).ping();
             fail("Should have failed with an exception");
         } catch (SQLException sqlEx) {
             // ignore for now
@@ -1089,9 +1089,9 @@ public class ConnectionTest extends BaseTestCase {
      *             if an error occurs.
      */
     public void testSetProfileSql() throws Exception {
-        ((com.mysql.jdbc.Connection) this.conn).setProfileSql(false);
+        ((com.mysql.mongo.jdbc.Connection) this.conn).setProfileSql(false);
         this.stmt.execute("SELECT 1");
-        ((com.mysql.jdbc.Connection) this.conn).setProfileSql(true);
+        ((com.mysql.mongo.jdbc.Connection) this.conn).setProfileSql(true);
         this.stmt.execute("SELECT 1");
     }
 
@@ -1512,12 +1512,12 @@ public class ConnectionTest extends BaseTestCase {
             props.setProperty("useCursorFetch", "true");
             fetchConn = getConnectionWithProps(props);
 
-            String classname = "com.mysql.jdbc.ServerPreparedStatement";
+            String classname = "com.mysql.mongo.jdbc.ServerPreparedStatement";
 
             if (Util.isJdbc42()) {
-                classname = "com.mysql.jdbc.JDBC42ServerPreparedStatement";
+                classname = "com.mysql.mongo.jdbc.JDBC42ServerPreparedStatement";
             } else if (Util.isJdbc4()) {
-                classname = "com.mysql.jdbc.JDBC4ServerPreparedStatement";
+                classname = "com.mysql.mongo.jdbc.JDBC4ServerPreparedStatement";
             }
 
             assertEquals(classname, fetchConn.prepareStatement("SELECT 1").getClass().getName());
@@ -1554,7 +1554,7 @@ public class ConnectionTest extends BaseTestCase {
         checkInterfaceImplemented(java.sql.PreparedStatement.class.getMethods(), pStmtToCheck.getClass(), pStmtToCheck);
         checkInterfaceImplemented(java.sql.ParameterMetaData.class.getMethods(), paramMd.getClass(), paramMd);
 
-        pStmtToCheck = ((com.mysql.jdbc.Connection) connToCheck).serverPrepareStatement("SELECT 1");
+        pStmtToCheck = ((com.mysql.mongo.jdbc.Connection) connToCheck).serverPrepareStatement("SELECT 1");
 
         checkInterfaceImplemented(java.sql.PreparedStatement.class.getMethods(), pStmtToCheck.getClass(), pStmtToCheck);
         ResultSet toCheckRs = connToCheck.createStatement().executeQuery("SELECT 1");
@@ -1730,7 +1730,7 @@ public class ConnectionTest extends BaseTestCase {
 
         if (host.equals("localhost") || host.equals("127.0.0.1")) {
             // we can actually test this
-            assertTrue(((com.mysql.jdbc.ConnectionImpl) this.conn).isServerLocal());
+            assertTrue(((com.mysql.mongo.jdbc.ConnectionImpl) this.conn).isServerLocal());
         }
 
     }
@@ -1982,10 +1982,10 @@ public class ConnectionTest extends BaseTestCase {
 
     public static class TestEnableEscapeProcessingStatementInterceptor extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
-            if (sql == null && interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
-                sql = ((com.mysql.jdbc.PreparedStatement) interceptedStatement).asSql();
+            if (sql == null && interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
+                sql = ((com.mysql.mongo.jdbc.PreparedStatement) interceptedStatement).asSql();
             }
 
             int p;

@@ -23,7 +23,7 @@
 
 package testsuite.simple;
 
-import com.mysql.jdbc.util.ServerController;
+import com.mysql.mongo.jdbc.util.ServerController;
 
 import testsuite.BaseTestCase;
 
@@ -43,7 +43,7 @@ public class ServerControllerTest extends BaseTestCase {
     public ServerControllerTest(String name) {
         super(name);
 
-        this.baseDir = System.getProperty("com.mysql.jdbc.test.ServerController.basedir");
+        this.baseDir = System.getProperty("com.mysql.mongo.jdbc.test.ServerController.basedir");
     }
 
     /**
@@ -59,7 +59,7 @@ public class ServerControllerTest extends BaseTestCase {
      * Demonstrates usage of the ServerController class.
      * 
      * This test is only run if the property
-     * 'com.mysql.jdbc.test.ServerController.basedir' is set.
+     * 'com.mysql.mongo.jdbc.test.ServerController.basedir' is set.
      * 
      * @throws Exception
      *             if an error occurs.

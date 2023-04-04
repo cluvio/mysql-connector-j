@@ -33,7 +33,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import com.mysql.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
 
 import testsuite.BaseTestCase;
 import testsuite.UnreliableSocketFactory;
@@ -1170,7 +1170,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
         props.setProperty("retriesAllDown", "2");
         props.setProperty("failOverReadOnly", "false");
 
-        com.mysql.jdbc.Connection testConn = (com.mysql.jdbc.Connection) getUnreliableFailoverConnection(new String[] { HOST_1, HOST_2, HOST_3 }, props,
+        com.mysql.mongo.jdbc.Connection testConn = (com.mysql.mongo.jdbc.Connection) getUnreliableFailoverConnection(new String[] { HOST_1, HOST_2, HOST_3 }, props,
                 downedHosts);
         Statement testStmt = null;
 
@@ -1317,7 +1317,7 @@ public class MultiHostConnectionTest extends BaseTestCase {
         this.rs = testConn.createStatement().executeQuery("SELECT 1");
         assertTrue(this.rs.next());
         assertEquals(1, this.rs.getInt(1));
-        assertEquals(HOST_4, ((com.mysql.jdbc.MySQLConnection) testConn).getHost());
+        assertEquals(HOST_4, ((com.mysql.mongo.jdbc.MySQLConnection) testConn).getHost());
 
         UnreliableSocketFactory.dontDownHost(HOST_2);
         testConn.commit(); // Retries HOST2 and succeeds.

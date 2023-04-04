@@ -26,7 +26,7 @@ package testsuite.simple;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.StringUtils;
 
 import testsuite.BaseTestCase;
 

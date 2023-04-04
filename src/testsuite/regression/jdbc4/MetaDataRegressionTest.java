@@ -33,8 +33,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import com.mysql.jdbc.ConnectionProperties;
-import com.mysql.jdbc.Util;
+import com.mysql.mongo.jdbc.ConnectionProperties;
+import com.mysql.mongo.jdbc.Util;
 
 import testsuite.BaseTestCase;
 

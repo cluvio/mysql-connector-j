@@ -36,8 +36,8 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlXid;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXid;
 
 import testsuite.BaseTestCase;
 

@@ -34,18 +34,18 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
-import com.mysql.jdbc.Messages;
-import com.mysql.jdbc.MysqlErrorNumbers;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.Util;
+import com.mysql.mongo.jdbc.Messages;
+import com.mysql.mongo.jdbc.MysqlErrorNumbers;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.Util;
 
 import javax.sql.PooledConnection;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
-import com.mysql.jdbc.jdbc2.optional.JDBC4MysqlPooledConnection;
-import com.mysql.jdbc.jdbc2.optional.JDBC4MysqlXAConnection;
-import com.mysql.jdbc.jdbc2.optional.JDBC4SuspendableXAConnection;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.JDBC4MysqlPooledConnection;
+import com.mysql.mongo.jdbc.jdbc2.optional.JDBC4MysqlXAConnection;
+import com.mysql.mongo.jdbc.jdbc2.optional.JDBC4SuspendableXAConnection;
 
 import testsuite.BaseTestCase;
 import testsuite.regression.ConnectionRegressionTest.Bug72712StatementInterceptor;

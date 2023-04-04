@@ -30,8 +30,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import com.mysql.jdbc.StringUtils;
-import com.mysql.jdbc.StringUtils.SearchMode;
+import com.mysql.mongo.jdbc.StringUtils;
+import com.mysql.mongo.jdbc.StringUtils.SearchMode;
 
 import testsuite.BaseTestCase;
 

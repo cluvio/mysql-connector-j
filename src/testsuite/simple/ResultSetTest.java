@@ -31,8 +31,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.ConnectionImpl;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.ConnectionImpl;
 
 import testsuite.BaseTestCase;
 
@@ -165,30 +165,30 @@ public class ResultSetTest extends BaseTestCase {
             for (int i = 0; i < numCols; i++) {
                 assertEquals(
                         "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                         numChars, this.rs.getString(i + 1).length());
             }
         }
 
-        this.rs = ((com.mysql.jdbc.Connection) paddedConn).clientPrepareStatement(query).executeQuery();
+        this.rs = ((com.mysql.mongo.jdbc.Connection) paddedConn).clientPrepareStatement(query).executeQuery();
 
         while (this.rs.next()) {
             for (int i = 0; i < numCols; i++) {
                 assertEquals(
                         "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                         numChars, this.rs.getString(i + 1).length());
             }
         }
 
         if (versionMeetsMinimum(4, 1)) {
-            this.rs = ((com.mysql.jdbc.Connection) paddedConn).serverPrepareStatement(query).executeQuery();
+            this.rs = ((com.mysql.mongo.jdbc.Connection) paddedConn).serverPrepareStatement(query).executeQuery();
 
             while (this.rs.next()) {
                 for (int i = 0; i < numCols; i++) {
                     assertEquals(
                             "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                    + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                    + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                             numChars, this.rs.getString(i + 1).length());
                 }
             }
@@ -201,49 +201,49 @@ public class ResultSetTest extends BaseTestCase {
                 if (this.rs.getRow() != 3) {
                     assertTrue(
                             "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                    + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                    + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                             numChars != this.rs.getString(i + 1).length());
                 } else {
                     assertEquals(
                             "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                    + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                    + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                             numChars, this.rs.getString(i + 1).length());
                 }
             }
         }
 
-        this.rs = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement(query).executeQuery();
+        this.rs = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement(query).executeQuery();
 
         while (this.rs.next()) {
             for (int i = 0; i < numCols; i++) {
                 if (this.rs.getRow() != 3) {
                     assertTrue(
                             "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                    + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                    + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                             numChars != this.rs.getString(i + 1).length());
                 } else {
                     assertEquals(
                             "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                    + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                    + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                             numChars, this.rs.getString(i + 1).length());
                 }
             }
         }
 
         if (versionMeetsMinimum(4, 1)) {
-            this.rs = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement(query).executeQuery();
+            this.rs = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement(query).executeQuery();
 
             while (this.rs.next()) {
                 for (int i = 0; i < numCols; i++) {
                     if (this.rs.getRow() != 3) {
                         assertTrue(
                                 "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                        + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                        + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                                 numChars != this.rs.getString(i + 1).length());
                     } else {
                         assertEquals(
                                 "For column '" + this.rs.getMetaData().getColumnName(i + 1) + "' of collation "
-                                        + ((com.mysql.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
+                                        + ((com.mysql.mongo.jdbc.ResultSetMetaData) this.rs.getMetaData()).getColumnCharacterSet(i + 1),
                                 numChars, this.rs.getString(i + 1).length());
                     }
                 }

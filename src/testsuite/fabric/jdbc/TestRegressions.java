@@ -32,10 +32,10 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.concurrent.TimeUnit;
 
-import com.mysql.fabric.FabricConnection;
-import com.mysql.fabric.Server;
-import com.mysql.fabric.jdbc.FabricMySQLConnection;
-import com.mysql.fabric.jdbc.FabricMySQLDataSource;
+import com.mysql.mongo.fabric.FabricConnection;
+import com.mysql.mongo.fabric.Server;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLConnection;
+import com.mysql.mongo.fabric.jdbc.FabricMySQLDataSource;
 
 import testsuite.fabric.BaseFabricTestCase;
 

@@ -23,7 +23,7 @@
 
 package testsuite;
 
-import com.mysql.jdbc.log.StandardLogger;
+import com.mysql.mongo.jdbc.log.StandardLogger;
 
 /**
  * Provides logging facilities for those platforms that don't have built-in facilities. Simply logs messages to STDERR.

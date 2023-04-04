@@ -41,8 +41,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.Util;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.Util;
 
 import testsuite.BaseTestCase;
 
@@ -455,7 +455,7 @@ public class CharsetTest extends BaseTestCase {
                     + CharsetMapping.getJavaEncodingForCollationIndex(index) + "  :  " + index + "  :  "
                     + CharsetMapping.COLLATION_INDEX_TO_COLLATION_NAME[index] + "  :  " + CharsetMapping.getMysqlCharsetNameForCollationIndex(index) + "  :  "
                     + CharsetMapping.CHARSET_NAME_TO_CHARSET.get(csname) + "  :  " + CharsetMapping.getJavaEncodingForMysqlCharset(csname) + "  :  "
-                    + CharsetMapping.getMysqlCharsetForJavaEncoding(canonicalName, (com.mysql.jdbc.Connection) this.conn) + "  :  "
+                    + CharsetMapping.getMysqlCharsetForJavaEncoding(canonicalName, (com.mysql.mongo.jdbc.Connection) this.conn) + "  :  "
                     + CharsetMapping.getCollationIndexForJavaEncoding(canonicalName, this.conn) + "  :  " + CharsetMapping.isMultibyteCharset(canonicalName));
 
             Set<String> s = cs.aliases();
@@ -468,7 +468,7 @@ public class CharsetTest extends BaseTestCase {
                         + CharsetMapping.getJavaEncodingForCollationIndex(index) + "  :  " + index + "  :  "
                         + CharsetMapping.COLLATION_INDEX_TO_COLLATION_NAME[index] + "  :  " + CharsetMapping.getMysqlCharsetNameForCollationIndex(index)
                         + "  :  " + CharsetMapping.CHARSET_NAME_TO_CHARSET.get(csname) + "  :  " + CharsetMapping.getJavaEncodingForMysqlCharset(csname)
-                        + "  :  " + CharsetMapping.getMysqlCharsetForJavaEncoding(alias, (com.mysql.jdbc.Connection) this.conn) + "  :  "
+                        + "  :  " + CharsetMapping.getMysqlCharsetForJavaEncoding(alias, (com.mysql.mongo.jdbc.Connection) this.conn) + "  :  "
                         + CharsetMapping.getCollationIndexForJavaEncoding(alias, this.conn) + "  :  " + CharsetMapping.isMultibyteCharset(alias));
             }
             System.out.println("===================================");
@@ -483,7 +483,7 @@ public class CharsetTest extends BaseTestCase {
                     + " by charset--> " + (CharsetMapping.getJavaEncodingForMysqlCharset(csname) + "                  ").substring(0, 20)
 
                     + " by encoding--> " + (CharsetMapping.getCollationIndexForJavaEncoding(enc, this.conn) + "   ").substring(0, 4) + "  :  "
-                    + (CharsetMapping.getMysqlCharsetForJavaEncoding(enc, (com.mysql.jdbc.Connection) this.conn) + "               ").substring(0, 15));
+                    + (CharsetMapping.getMysqlCharsetForJavaEncoding(enc, (com.mysql.mongo.jdbc.Connection) this.conn) + "               ").substring(0, 15));
         }
     }
 

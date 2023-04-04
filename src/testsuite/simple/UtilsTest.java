@@ -30,16 +30,16 @@ import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.List;
 
-import com.mysql.jdbc.ConnectionImpl;
-import com.mysql.jdbc.ConnectionProperties;
-import com.mysql.jdbc.MultiHostConnectionProxy;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.ResultSetImpl;
-import com.mysql.jdbc.Statement;
-import com.mysql.jdbc.StatementImpl;
-import com.mysql.jdbc.Util;
-import com.mysql.jdbc.Wrapper;
+import com.mysql.mongo.jdbc.ConnectionImpl;
+import com.mysql.mongo.jdbc.ConnectionProperties;
+import com.mysql.mongo.jdbc.MultiHostConnectionProxy;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.PreparedStatement;
+import com.mysql.mongo.jdbc.ResultSetImpl;
+import com.mysql.mongo.jdbc.Statement;
+import com.mysql.mongo.jdbc.StatementImpl;
+import com.mysql.mongo.jdbc.Util;
+import com.mysql.mongo.jdbc.Wrapper;
 
 import testsuite.BaseTestCase;
 
@@ -97,9 +97,9 @@ public class UtilsTest extends BaseTestCase {
         assertTrue(Util.isJdbcPackage("java.sql"));
         assertTrue(Util.isJdbcPackage("javax.sql"));
         assertTrue(Util.isJdbcPackage("javax.sql.rowset"));
-        assertTrue(Util.isJdbcPackage("com.mysql.jdbc"));
-        assertTrue(Util.isJdbcPackage("com.mysql.jdbc"));
-        assertTrue(Util.isJdbcPackage("com.mysql.jdbc.jdbc2.optional"));
+        assertTrue(Util.isJdbcPackage("com.mysql.mongo.jdbc"));
+        assertTrue(Util.isJdbcPackage("com.mysql.mongo.jdbc"));
+        assertTrue(Util.isJdbcPackage("com.mysql.mongo.jdbc.jdbc2.optional"));
 
         // Non-JDBC packages.
         assertFalse(Util.isJdbcPackage("java"));

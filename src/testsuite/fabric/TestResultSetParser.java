@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.mysql.fabric.proto.xmlrpc.ResultSetParser;
+import com.mysql.mongo.fabric.proto.xmlrpc.ResultSetParser;
 
 import junit.framework.TestCase;
 

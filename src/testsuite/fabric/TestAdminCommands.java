@@ -23,8 +23,8 @@
 
 package testsuite.fabric;
 
-import com.mysql.fabric.FabricCommunicationException;
-import com.mysql.fabric.proto.xmlrpc.XmlRpcClient;
+import com.mysql.mongo.fabric.FabricCommunicationException;
+import com.mysql.mongo.fabric.proto.xmlrpc.XmlRpcClient;
 
 /**
  * Tests for admin commands.

@@ -25,8 +25,8 @@ package testsuite.regression.jdbc42;
 
 import java.sql.Connection;
 
-import com.mysql.jdbc.JDBC42PreparedStatement;
-import com.mysql.jdbc.JDBC42ServerPreparedStatement;
+import com.mysql.mongo.jdbc.JDBC42PreparedStatement;
+import com.mysql.mongo.jdbc.JDBC42ServerPreparedStatement;
 
 import testsuite.BaseTestCase;
 

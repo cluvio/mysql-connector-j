@@ -73,22 +73,22 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import com.mysql.jdbc.CachedResultSetMetaData;
-import com.mysql.jdbc.CharsetMapping;
-import com.mysql.jdbc.CommunicationsException;
-import com.mysql.jdbc.Field;
-import com.mysql.jdbc.MySQLConnection;
-import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.ParameterBindings;
-import com.mysql.jdbc.ReplicationConnection;
-import com.mysql.jdbc.ResultSetInternalMethods;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.ServerPreparedStatement;
-import com.mysql.jdbc.StatementImpl;
-import com.mysql.jdbc.TimeUtil;
-import com.mysql.jdbc.Util;
-import com.mysql.jdbc.exceptions.MySQLTimeoutException;
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.mongo.jdbc.CachedResultSetMetaData;
+import com.mysql.mongo.jdbc.CharsetMapping;
+import com.mysql.mongo.jdbc.CommunicationsException;
+import com.mysql.mongo.jdbc.Field;
+import com.mysql.mongo.jdbc.MySQLConnection;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.ParameterBindings;
+import com.mysql.mongo.jdbc.ReplicationConnection;
+import com.mysql.mongo.jdbc.ResultSetInternalMethods;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.ServerPreparedStatement;
+import com.mysql.mongo.jdbc.StatementImpl;
+import com.mysql.mongo.jdbc.TimeUtil;
+import com.mysql.mongo.jdbc.Util;
+import com.mysql.mongo.jdbc.exceptions.MySQLTimeoutException;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
 
 import testsuite.BaseStatementInterceptor;
 import testsuite.BaseTestCase;
@@ -530,7 +530,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
             thaiStmt.executeUpdate("TRUNCATE TABLE testBug11540");
 
-            thaiPrepStmt = ((com.mysql.jdbc.Connection) thaiConn).clientPrepareStatement("INSERT INTO testBug11540 VALUES (?,?)");
+            thaiPrepStmt = ((com.mysql.mongo.jdbc.Connection) thaiConn).clientPrepareStatement("INSERT INTO testBug11540 VALUES (?,?)");
             thaiPrepStmt.setDate(1, origDate);
             thaiPrepStmt.setTimestamp(2, origTimestamp);
             thaiPrepStmt.executeUpdate();
@@ -558,7 +558,7 @@ public class StatementRegressionTest extends BaseTestCase {
      *             if the test fails.
      */
     public void testBug11663() throws Exception {
-        if (versionMeetsMinimum(4, 1, 0) && ((com.mysql.jdbc.Connection) this.conn).getUseServerPreparedStmts()) {
+        if (versionMeetsMinimum(4, 1, 0) && ((com.mysql.mongo.jdbc.Connection) this.conn).getUseServerPreparedStmts()) {
             Connection testcaseGenCon = null;
             PrintStream oldErr = System.err;
 
@@ -759,7 +759,7 @@ public class StatementRegressionTest extends BaseTestCase {
             this.pstmt.close();
             this.pstmt = null;
 
-            this.pstmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("select {d '1997-05-24'} FROM testBug15141");
+            this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("select {d '1997-05-24'} FROM testBug15141");
             this.rs = this.pstmt.executeQuery();
             assertTrue(this.rs.next());
             assertEquals("1997-05-24", this.rs.getString(1));
@@ -1171,10 +1171,10 @@ public class StatementRegressionTest extends BaseTestCase {
      *             if test fails.
      */
     public void testBug3557() throws Exception {
-        boolean populateDefaults = ((com.mysql.jdbc.ConnectionProperties) this.conn).getPopulateInsertRowWithDefaultValues();
+        boolean populateDefaults = ((com.mysql.mongo.jdbc.ConnectionProperties) this.conn).getPopulateInsertRowWithDefaultValues();
 
         try {
-            ((com.mysql.jdbc.ConnectionProperties) this.conn).setPopulateInsertRowWithDefaultValues(true);
+            ((com.mysql.mongo.jdbc.ConnectionProperties) this.conn).setPopulateInsertRowWithDefaultValues(true);
 
             this.stmt.executeUpdate("DROP TABLE IF EXISTS testBug3557");
 
@@ -1191,7 +1191,7 @@ public class StatementRegressionTest extends BaseTestCase {
             assertEquals("XYZ", this.rs.getObject(1));
             assertEquals("123", this.rs.getObject(2));
         } finally {
-            ((com.mysql.jdbc.ConnectionProperties) this.conn).setPopulateInsertRowWithDefaultValues(populateDefaults);
+            ((com.mysql.mongo.jdbc.ConnectionProperties) this.conn).setPopulateInsertRowWithDefaultValues(populateDefaults);
 
             this.stmt.executeUpdate("DROP TABLE IF EXISTS testBug3557");
         }
@@ -1501,22 +1501,22 @@ public class StatementRegressionTest extends BaseTestCase {
      * @throws SQLException
      */
     public void testBug4718() throws SQLException {
-        if (versionMeetsMinimum(4, 1, 0) && ((com.mysql.jdbc.Connection) this.conn).getUseServerPreparedStmts()) {
+        if (versionMeetsMinimum(4, 1, 0) && ((com.mysql.mongo.jdbc.Connection) this.conn).getUseServerPreparedStmts()) {
             this.pstmt = this.conn.prepareStatement("SELECT 1 LIMIT ?");
-            assertTrue(this.pstmt instanceof com.mysql.jdbc.PreparedStatement);
+            assertTrue(this.pstmt instanceof com.mysql.mongo.jdbc.PreparedStatement);
 
             this.pstmt = this.conn.prepareStatement("SELECT 1 LIMIT 1");
-            assertTrue(this.pstmt instanceof com.mysql.jdbc.ServerPreparedStatement);
+            assertTrue(this.pstmt instanceof com.mysql.mongo.jdbc.ServerPreparedStatement);
 
             this.pstmt = this.conn.prepareStatement("SELECT 1 LIMIT 1, ?");
-            assertTrue(this.pstmt instanceof com.mysql.jdbc.PreparedStatement);
+            assertTrue(this.pstmt instanceof com.mysql.mongo.jdbc.PreparedStatement);
 
             try {
                 this.stmt.executeUpdate("DROP TABLE IF EXISTS testBug4718");
                 this.stmt.executeUpdate("CREATE TABLE testBug4718 (field1 char(32))");
 
                 this.pstmt = this.conn.prepareStatement("ALTER TABLE testBug4718 ADD INDEX (field1)");
-                assertTrue(this.pstmt instanceof com.mysql.jdbc.PreparedStatement);
+                assertTrue(this.pstmt instanceof com.mysql.mongo.jdbc.PreparedStatement);
 
                 this.pstmt = this.conn.prepareStatement("SELECT 1");
                 assertTrue(this.pstmt instanceof ServerPreparedStatement);
@@ -1528,7 +1528,7 @@ public class StatementRegressionTest extends BaseTestCase {
                 assertTrue(this.pstmt instanceof ServerPreparedStatement);
 
                 this.pstmt = this.conn.prepareStatement("UPDATE testBug4718 SET field1=1 LIMIT ?");
-                assertTrue(this.pstmt instanceof com.mysql.jdbc.PreparedStatement);
+                assertTrue(this.pstmt instanceof com.mysql.mongo.jdbc.PreparedStatement);
 
                 this.pstmt = this.conn.prepareStatement("UPDATE testBug4718 SET field1='Will we ignore LIMIT ?,?'");
                 assertTrue(this.pstmt instanceof ServerPreparedStatement);
@@ -2265,7 +2265,7 @@ public class StatementRegressionTest extends BaseTestCase {
                             StatementRegressionTest.this.stmt
                                     .executeUpdate("LOAD DATA LOCAL INFILE '" + fileName + "' INTO TABLE loadDataRegress CHARACTER SET "
                                             + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) StatementRegressionTest.this.conn).getEncoding(),
-                                                    (com.mysql.jdbc.Connection) StatementRegressionTest.this.conn));
+                                                    (com.mysql.mongo.jdbc.Connection) StatementRegressionTest.this.conn));
                             return null;
                         }
                     });
@@ -2275,7 +2275,7 @@ public class StatementRegressionTest extends BaseTestCase {
             Connection testConn = getConnectionWithProps(props);
             int updateCount = testConn.createStatement().executeUpdate("LOAD DATA LOCAL INFILE '" + fileNameBuf.toString()
                     + "' INTO TABLE loadDataRegress CHARACTER SET "
-                    + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) this.conn).getEncoding(), (com.mysql.jdbc.Connection) this.conn));
+                    + CharsetMapping.getMysqlCharsetForJavaEncoding(((MySQLConnection) this.conn).getEncoding(), (com.mysql.mongo.jdbc.Connection) this.conn));
             assertTrue(updateCount == rowCount);
         } finally {
             this.stmt.executeUpdate("DROP TABLE IF EXISTS loadDataRegress");
@@ -2380,7 +2380,7 @@ public class StatementRegressionTest extends BaseTestCase {
      * "testBug9288"; PreparedStatement pStmt = null;
      * 
      * try { createTable(tableName, "(field1 VARCHAR(32), field2 INT)"); pStmt =
-     * ((com.mysql.jdbc.Connection)this.conn).clientPrepareStatement( "SELECT
+     * ((com.mysql.mongo.jdbc.Connection)this.conn).clientPrepareStatement( "SELECT
      * COUNT(1) FROM " + tableName + " WHERE " + "field1 LIKE '%' ESCAPE '\\'
      * AND " + "field2 > ?"); pStmt.setInt(1, 0);
      * 
@@ -2496,7 +2496,7 @@ public class StatementRegressionTest extends BaseTestCase {
      */
     public void testSetCharacterStream() throws Exception {
         try {
-            ((com.mysql.jdbc.Connection) this.conn).setTraceProtocol(true);
+            ((com.mysql.mongo.jdbc.Connection) this.conn).setTraceProtocol(true);
 
             this.stmt.executeUpdate("DROP TABLE IF EXISTS charStreamRegressTest");
             this.stmt.executeUpdate("CREATE TABLE charStreamRegressTest(field1 text)");
@@ -2569,7 +2569,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
             assertTrue("Retrieved value of length " + result.length() + " != length of inserted value " + charBuf.length, result.length() == charBuf.length);
         } finally {
-            ((com.mysql.jdbc.Connection) this.conn).setTraceProtocol(false);
+            ((com.mysql.mongo.jdbc.Connection) this.conn).setTraceProtocol(false);
 
             if (this.rs != null) {
                 try {
@@ -2760,7 +2760,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertNotNull(pStmt.getGeneratedKeys());
 
         if (versionMeetsMinimum(4, 1)) {
-            pStmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", Statement.RETURN_GENERATED_KEYS);
+            pStmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1", Statement.RETURN_GENERATED_KEYS);
             assertNotNull(pStmt.getGeneratedKeys());
         }
     }
@@ -2785,7 +2785,7 @@ public class StatementRegressionTest extends BaseTestCase {
                 assertEquals(SQLError.SQL_STATE_ILLEGAL_ARGUMENT, sqlEx.getSQLState());
             }
 
-            pStmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("INSERT INTO testBug17857 VALUES (?)");
+            pStmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("INSERT INTO testBug17857 VALUES (?)");
             pStmt.close();
             try {
                 pStmt.clearParameters();
@@ -2867,7 +2867,7 @@ public class StatementRegressionTest extends BaseTestCase {
         this.rs.close();
         this.stmt.executeUpdate("TRUNCATE TABLE testBug19615");
 
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("INSERT INTO testBug19615 VALUES (?)");
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("INSERT INTO testBug19615 VALUES (?)");
         this.pstmt.setObject(1, dec, Types.DECIMAL);
         this.pstmt.executeUpdate();
         this.pstmt.close();
@@ -2894,7 +2894,7 @@ public class StatementRegressionTest extends BaseTestCase {
             PreparedStatement toBeKilledPstmt = null;
 
             try {
-                toBeKilledPstmt = ((com.mysql.jdbc.Connection) toBeKilledConn).clientPrepareStatement("INSERT INTO testBug20029 VALUES (?)");
+                toBeKilledPstmt = ((com.mysql.mongo.jdbc.Connection) toBeKilledConn).clientPrepareStatement("INSERT INTO testBug20029 VALUES (?)");
 
                 for (int j = 0; j < 1000; j++) {
                     toBeKilledPstmt.setInt(1, j);
@@ -3069,7 +3069,7 @@ public class StatementRegressionTest extends BaseTestCase {
      */
     public void testBug20888() throws Exception {
         String s = "SELECT 'What do you think about D\\'Artanian''?', \"What do you think about D\\\"Artanian\"\"?\"";
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement(s);
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement(s);
 
         this.rs = this.pstmt.executeQuery();
         this.rs.next();
@@ -3106,7 +3106,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertEquals(1, this.stmt.executeUpdate("insert into testBug21438 values (1,NOW());"));
 
         if (this.versionMeetsMinimum(4, 1)) {
-            this.pstmt = ((com.mysql.jdbc.Connection) this.conn)
+            this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn)
                     .serverPrepareStatement("UPDATE testBug21438 SET test_date=ADDDATE(?,INTERVAL 1 YEAR) WHERE t_id=1;");
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             ts.setNanos(999999999);
@@ -3182,7 +3182,7 @@ public class StatementRegressionTest extends BaseTestCase {
             assertEquals(this.pstmt.executeUpdate(), 1);
 
             assertEquals(this.stmt.executeUpdate("UPDATE testbug22290 SET cost='1.00'"), 1);
-            this.pstmt = ((com.mysql.jdbc.Connection) configuredConn).clientPrepareStatement("update testbug22290 set cost = cost + ? where id = 1");
+            this.pstmt = ((com.mysql.mongo.jdbc.Connection) configuredConn).clientPrepareStatement("update testbug22290 set cost = cost + ? where id = 1");
             this.pstmt.setBigDecimal(1, new BigDecimal("1.11"));
             assertEquals(this.pstmt.executeUpdate(), 1);
         } finally {
@@ -3193,7 +3193,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     public void testClientPreparedSetBoolean() throws Exception {
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("SELECT ?");
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("SELECT ?");
         this.pstmt.setBoolean(1, false);
         assertEquals("SELECT 0", this.pstmt.toString().substring(this.pstmt.toString().indexOf("SELECT")));
         this.pstmt.setBoolean(1, true);
@@ -3331,11 +3331,11 @@ public class StatementRegressionTest extends BaseTestCase {
         multiStmt.addBatch("UPDATE testBug25073 SET field1=5 WHERE field1=1");
         multiStmt.addBatch("UPDATE testBug25073 SET field1=6 WHERE field1=2 OR field1=3");
 
-        int beforeOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        int beforeOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         multiStmt.executeBatch();
 
-        int afterOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        int afterOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         assertEquals(beforeOpenStatementCount, afterOpenStatementCount);
 
@@ -3352,11 +3352,11 @@ public class StatementRegressionTest extends BaseTestCase {
             multiStmt.addBatch("INSERT INTO testBug25073(field1) VALUES (" + i + ")");
         }
 
-        beforeOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        beforeOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         multiStmt.executeBatch();
 
-        afterOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        afterOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         assertEquals(beforeOpenStatementCount, afterOpenStatementCount);
 
@@ -3375,11 +3375,11 @@ public class StatementRegressionTest extends BaseTestCase {
             pStmt.addBatch();
         }
 
-        beforeOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        beforeOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         pStmt.executeBatch();
 
-        afterOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        afterOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         assertEquals(beforeOpenStatementCount, afterOpenStatementCount);
 
@@ -3397,11 +3397,11 @@ public class StatementRegressionTest extends BaseTestCase {
             pStmt.addBatch();
         }
 
-        beforeOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        beforeOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         pStmt.executeBatch();
 
-        afterOpenStatementCount = ((com.mysql.jdbc.Connection) multiConn).getActiveStatementCount();
+        afterOpenStatementCount = ((com.mysql.mongo.jdbc.Connection) multiConn).getActiveStatementCount();
 
         assertEquals(beforeOpenStatementCount, afterOpenStatementCount);
     }
@@ -3489,7 +3489,7 @@ public class StatementRegressionTest extends BaseTestCase {
             assertEquals(Statement.SUCCESS_NO_INFO, counts[0]);
             assertEquals(Statement.SUCCESS_NO_INFO, counts[1]);
             assertEquals(Statement.SUCCESS_NO_INFO, counts[2]);
-            assertEquals(true, ((com.mysql.jdbc.PreparedStatement) this.pstmt).canRewriteAsMultiValueInsertAtSqlLevel());
+            assertEquals(true, ((com.mysql.mongo.jdbc.PreparedStatement) this.pstmt).canRewriteAsMultiValueInsertAtSqlLevel());
         } finally {
             if (multiConn != null) {
                 multiConn.close();
@@ -3536,7 +3536,7 @@ public class StatementRegressionTest extends BaseTestCase {
             this.stmt.execute("(SELECT 1) UNION (SELECT 2)");
             this.conn.prepareStatement("(SELECT 1) UNION (SELECT 2)").execute();
             if (versionMeetsMinimum(4, 1)) {
-                ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("(SELECT 1) UNION (SELECT 2)").execute();
+                ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("(SELECT 1) UNION (SELECT 2)").execute();
             }
         } finally {
             this.conn.setReadOnly(false);
@@ -3627,7 +3627,7 @@ public class StatementRegressionTest extends BaseTestCase {
      *             if the test fails.
      */
     public void testBug28851() throws Exception {
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1/?");
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement("SELECT 1/?");
         this.pstmt.setInt(1, 1);
         this.rs = this.pstmt.executeQuery();
 
@@ -3649,7 +3649,7 @@ public class StatementRegressionTest extends BaseTestCase {
     public void testBug28596() throws Exception {
         String query = "SELECT #\n?, #\n? #?\r\n,-- abcdefg \n?";
 
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).clientPrepareStatement(query);
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).clientPrepareStatement(query);
         this.pstmt.setInt(1, 1);
         this.pstmt.setInt(2, 2);
         this.pstmt.setInt(3, 3);
@@ -3742,7 +3742,7 @@ public class StatementRegressionTest extends BaseTestCase {
         assertEquals("GENERATED_KEY", this.pstmt.getGeneratedKeys().getMetaData().getColumnName(1));
 
         if (versionMeetsMinimum(4, 1, 0)) {
-            this.pstmt = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("INSERT INTO testBustedGGKColumnNames VALUES (null)",
+            this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("INSERT INTO testBustedGGKColumnNames VALUES (null)",
                     Statement.RETURN_GENERATED_KEYS);
             this.pstmt.executeUpdate();
             assertEquals("GENERATED_KEY", this.pstmt.getGeneratedKeys().getMetaData().getColumnName(1));
@@ -4062,7 +4062,7 @@ public class StatementRegressionTest extends BaseTestCase {
             public void setOwningStatement(StatementImpl owningStatement) {
             }
 
-            public void setStatementUsedForFetchingRows(com.mysql.jdbc.PreparedStatement stmt) {
+            public void setStatementUsedForFetchingRows(com.mysql.mongo.jdbc.PreparedStatement stmt) {
             }
 
             public void setWrapperStatement(Statement wrapperStatement) {
@@ -4729,14 +4729,14 @@ public class StatementRegressionTest extends BaseTestCase {
         Connection fetchConn = getConnectionWithProps("useCursorFetch=true");
         Statement fetchStmt = fetchConn.createStatement();
 
-        int stmtCount = ((com.mysql.jdbc.Connection) fetchConn).getActiveStatementCount();
+        int stmtCount = ((com.mysql.mongo.jdbc.Connection) fetchConn).getActiveStatementCount();
 
         fetchStmt.setFetchSize(100);
         this.rs = fetchStmt.executeQuery("SELECT 1");
 
-        assertEquals(((com.mysql.jdbc.Connection) fetchConn).getActiveStatementCount(), stmtCount + 1);
+        assertEquals(((com.mysql.mongo.jdbc.Connection) fetchConn).getActiveStatementCount(), stmtCount + 1);
         this.rs.close();
-        assertEquals(((com.mysql.jdbc.Connection) fetchConn).getActiveStatementCount(), stmtCount);
+        assertEquals(((com.mysql.mongo.jdbc.Connection) fetchConn).getActiveStatementCount(), stmtCount);
     }
 
     public void testBug35170() throws Exception {
@@ -4771,7 +4771,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
     public void testBug35666() throws Exception {
         Connection loggingConn = getConnectionWithProps("logSlowQueries=true");
-        this.pstmt = ((com.mysql.jdbc.Connection) loggingConn).serverPrepareStatement("SELECT SLEEP(4)");
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) loggingConn).serverPrepareStatement("SELECT SLEEP(4)");
         this.pstmt.execute();
     }
 
@@ -4895,7 +4895,7 @@ public class StatementRegressionTest extends BaseTestCase {
                     for (int i = 0; i < 2; i++) {
                         createTable(tableName, "(k int primary key auto_increment, p varchar(4)) ENGINE=" + engineName);
 
-                        ((com.mysql.jdbc.Connection) twoConn).setRewriteBatchedStatements(i == 1);
+                        ((com.mysql.mongo.jdbc.Connection) twoConn).setRewriteBatchedStatements(i == 1);
 
                         this.pstmt = twoConn.prepareStatement("INSERT INTO " + tableName + " (p) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
                         this.pstmt.setString(1, "a");
@@ -5193,7 +5193,7 @@ public class StatementRegressionTest extends BaseTestCase {
             this.pstmt = this.conn.prepareStatement("INSERT INTO testBug44056 VALUES (null)", Statement.RETURN_GENERATED_KEYS);
             this.pstmt.executeUpdate();
             checkOpenResultsFor44056(this.pstmt);
-            this.pstmt = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement("INSERT INTO testBug44056 VALUES (null)",
+            this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement("INSERT INTO testBug44056 VALUES (null)",
                     Statement.RETURN_GENERATED_KEYS);
             this.pstmt.executeUpdate();
             checkOpenResultsFor44056(this.pstmt);
@@ -5204,9 +5204,9 @@ public class StatementRegressionTest extends BaseTestCase {
 
     private void checkOpenResultsFor44056(Statement newStmt) throws SQLException {
         this.rs = newStmt.getGeneratedKeys();
-        assertEquals(0, ((com.mysql.jdbc.Statement) newStmt).getOpenResultSetCount());
+        assertEquals(0, ((com.mysql.mongo.jdbc.Statement) newStmt).getOpenResultSetCount());
         this.rs.close();
-        assertEquals(0, ((com.mysql.jdbc.Statement) newStmt).getOpenResultSetCount());
+        assertEquals(0, ((com.mysql.mongo.jdbc.Statement) newStmt).getOpenResultSetCount());
     }
 
     /**
@@ -5341,10 +5341,10 @@ public class StatementRegressionTest extends BaseTestCase {
         String prevSql;
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
 
-            if (interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
+            if (interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
                 String asSql = interceptedStatement.toString();
                 int firstColon = asSql.indexOf(":");
                 asSql = asSql.substring(firstColon + 2);
@@ -5353,7 +5353,7 @@ public class StatementRegressionTest extends BaseTestCase {
                     throw new RuntimeException("Previous statement matched current: " + sql);
                 }
                 this.prevSql = asSql;
-                ParameterBindings b = ((com.mysql.jdbc.PreparedStatement) interceptedStatement).getParameterBindings();
+                ParameterBindings b = ((com.mysql.mongo.jdbc.PreparedStatement) interceptedStatement).getParameterBindings();
                 vals.add(new Integer(b.getInt(1)));
             }
             return null;
@@ -5554,7 +5554,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
     public static class TestBug51666StatementInterceptor extends BaseStatementInterceptor {
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection conn)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection conn)
                 throws SQLException {
             if (sql.equals("SELECT 1")) {
                 java.sql.Statement test = conn.createStatement();
@@ -5585,8 +5585,8 @@ public class StatementRegressionTest extends BaseTestCase {
         static boolean hasSeenBadIndex = false;
 
         @Override
-        public ResultSetInternalMethods postProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, ResultSetInternalMethods originalResultSet,
-                com.mysql.jdbc.Connection connection, int warningCount, boolean noIndexUsed, boolean noGoodIndexUsed, SQLException statementException)
+        public ResultSetInternalMethods postProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, ResultSetInternalMethods originalResultSet,
+                com.mysql.mongo.jdbc.Connection connection, int warningCount, boolean noIndexUsed, boolean noGoodIndexUsed, SQLException statementException)
                 throws SQLException {
             if (noIndexUsed) {
                 hasSeenScan = true;
@@ -5643,8 +5643,8 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for Bug#58728, NPE in com.mysql.jdbc.jdbc2.optional.StatementWrappe.getResultSet()
-     * ((com.mysql.jdbc.ResultSetInternalMethods) rs).setWrapperStatement(this);
+     * Tests fix for Bug#58728, NPE in com.mysql.mongo.jdbc.jdbc2.optional.StatementWrappe.getResultSet()
+     * ((com.mysql.mongo.jdbc.ResultSetInternalMethods) rs).setWrapperStatement(this);
      * when rs is null
      */
     public void testBug58728() throws Exception {
@@ -5678,7 +5678,7 @@ public class StatementRegressionTest extends BaseTestCase {
         this.rs = this.stmt.executeQuery(sql);
         this.stmt.cancel();
         this.stmt.execute(sql);
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement(sql);
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement(sql);
         this.pstmt.execute();
         this.pstmt.cancel();
         this.pstmt.execute();
@@ -5699,13 +5699,13 @@ public class StatementRegressionTest extends BaseTestCase {
         this.stmt.execute(sql);
         assertEquals(1, this.stmt.getUpdateCount());
 
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement(sql);
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement(sql);
         this.pstmt.execute();
         assertEquals(1, this.pstmt.getUpdateCount());
         this.pstmt.cancel();
         this.pstmt.close();
 
-        this.pstmt = ((com.mysql.jdbc.Connection) this.conn).serverPrepareStatement(sql);
+        this.pstmt = ((com.mysql.mongo.jdbc.Connection) this.conn).serverPrepareStatement(sql);
         assertEquals(1, this.pstmt.executeUpdate());
 
         this.pstmt.cancel();
@@ -7514,17 +7514,17 @@ public class StatementRegressionTest extends BaseTestCase {
         private boolean sendFracSecs = false;
 
         @Override
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
             this.sendFracSecs = Boolean.parseBoolean(props.getProperty("sendFractionalSeconds"));
             super.init(conn, props);
         }
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (!(interceptedStatement instanceof ServerPreparedStatement)) {
                 String query = sql;
-                if (query == null && interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
+                if (query == null && interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
                     query = interceptedStatement.toString();
                     query = query.substring(query.indexOf(':') + 2);
                 }
@@ -7621,7 +7621,7 @@ public class StatementRegressionTest extends BaseTestCase {
         private int execCounter = 0;
 
         @Override
-        public void init(com.mysql.jdbc.Connection conn, Properties props) throws SQLException {
+        public void init(com.mysql.mongo.jdbc.Connection conn, Properties props) throws SQLException {
             super.init(conn, props);
             System.out.println("\nuseServerPrepStmts: " + props.getProperty("useServerPrepStmts") + " | rewriteBatchedStatements: "
                     + props.getProperty("rewriteBatchedStatements"));
@@ -7630,10 +7630,10 @@ public class StatementRegressionTest extends BaseTestCase {
         }
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             String query = sql;
-            if (query == null && interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
+            if (query == null && interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
                 query = interceptedStatement.toString();
                 query = query.substring(query.indexOf(':') + 2);
             }
@@ -7787,7 +7787,7 @@ public class StatementRegressionTest extends BaseTestCase {
     public void testBug23188498() throws Exception {
         createTable("testBug23188498", "(id INT)");
 
-        MySQLConnection testConn = (com.mysql.jdbc.MySQLConnection) getConnectionWithProps("useServerPrepStmts=true,useInformationSchema=true,profileSQL=true");
+        MySQLConnection testConn = (com.mysql.mongo.jdbc.MySQLConnection) getConnectionWithProps("useServerPrepStmts=true,useInformationSchema=true,profileSQL=true");
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         // Insert data:
@@ -8177,11 +8177,11 @@ public class StatementRegressionTest extends BaseTestCase {
         public static String testCase = "";
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (isActive) {
                 String query = sql;
-                if (query == null && interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
+                if (query == null && interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
                     query = interceptedStatement.toString();
                     query = query.substring(query.indexOf(':') + 2);
                 }
@@ -8436,7 +8436,7 @@ public class StatementRegressionTest extends BaseTestCase {
         testConn.close();
 
         // Plain connection with proxied result sets.
-        testConn = getConnectionWithProps("statementInterceptors=com.mysql.jdbc.interceptors.ResultSetScannerInterceptor,resultSetScannerRegex=.*");
+        testConn = getConnectionWithProps("statementInterceptors=com.mysql.mongo.jdbc.interceptors.ResultSetScannerInterceptor,resultSetScannerRegex=.*");
         assertFalse(testConn.getClass().getName().matches("^(?:com\\.sun\\.proxy\\.)?\\$Proxy\\d*"));
         assertTrue(testConn.equals(testConn));
         this.stmt = testConn.createStatement();
@@ -8525,7 +8525,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
             boolean cachedSPS = useSPS && cachePS;
 
-            com.mysql.jdbc.Connection testConn = (com.mysql.jdbc.Connection) getConnectionWithProps(props);
+            com.mysql.mongo.jdbc.Connection testConn = (com.mysql.mongo.jdbc.Connection) getConnectionWithProps(props);
             // Single PreparedStatement, closed multiple times.
             for (int i = 0; i < 100; i++) {
                 this.pstmt = testConn.prepareStatement(sql1);
@@ -8540,7 +8540,7 @@ public class StatementRegressionTest extends BaseTestCase {
             testConn.close();
             assertEquals(0, testConn.getActiveStatementCount());
 
-            testConn = (com.mysql.jdbc.Connection) getConnectionWithProps(props);
+            testConn = (com.mysql.mongo.jdbc.Connection) getConnectionWithProps(props);
             // Multiple PreparedStatements interchanged, two queries, closed multiple times. 
             for (int i = 0; i < 100; i++) {
                 for (int j = 0; j < 4; j++) {
@@ -8958,13 +8958,13 @@ public class StatementRegressionTest extends BaseTestCase {
         public static int countInterceptions = 0;
 
         @Override
-        public ResultSetInternalMethods preProcess(String sql, com.mysql.jdbc.Statement interceptedStatement, com.mysql.jdbc.Connection connection)
+        public ResultSetInternalMethods preProcess(String sql, com.mysql.mongo.jdbc.Statement interceptedStatement, com.mysql.mongo.jdbc.Connection connection)
                 throws SQLException {
             if (sql == null) {
                 sql = "";
             }
-            if (sql.length() == 0 && interceptedStatement instanceof com.mysql.jdbc.PreparedStatement) {
-                sql = ((com.mysql.jdbc.PreparedStatement) interceptedStatement).asSql();
+            if (sql.length() == 0 && interceptedStatement instanceof com.mysql.mongo.jdbc.PreparedStatement) {
+                sql = ((com.mysql.mongo.jdbc.PreparedStatement) interceptedStatement).asSql();
             }
             if (interceptedStatement instanceof PreparedStatement) {
                 countInterceptions++;

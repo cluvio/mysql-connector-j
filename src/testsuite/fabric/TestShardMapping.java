@@ -34,11 +34,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import com.mysql.fabric.HashShardMapping;
-import com.mysql.fabric.RangeShardMapping;
-import com.mysql.fabric.ShardIndex;
-import com.mysql.fabric.ShardMapping;
-import com.mysql.fabric.ShardingType;
+import com.mysql.mongo.fabric.HashShardMapping;
+import com.mysql.mongo.fabric.RangeShardMapping;
+import com.mysql.mongo.fabric.ShardIndex;
+import com.mysql.mongo.fabric.ShardMapping;
+import com.mysql.mongo.fabric.ShardingType;
 
 import junit.framework.TestCase;
 
@@ -130,7 +130,7 @@ public class TestShardMapping extends TestCase {
     }
 
     /**
-     * Tests fix for Bug#82203 - com.mysql.fabric.HashShardMapping is not thread safe.
+     * Tests fix for Bug#82203 - com.mysql.mongo.fabric.HashShardMapping is not thread safe.
      * 
      * This test is non-deterministic but most runs used to fail before 5 to 10 seconds. This test runs at most for 30 seconds.
      */

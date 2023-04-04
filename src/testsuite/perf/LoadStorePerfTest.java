@@ -51,9 +51,9 @@ public class LoadStorePerfTest extends BasePerfTest {
     public LoadStorePerfTest(String name) {
         super(name);
 
-        String newTableType = System.getProperty("com.mysql.jdbc.test.tabletype");
+        String newTableType = System.getProperty("com.mysql.mongo.jdbc.test.tabletype");
 
-        this.largeResults = "TRUE".equalsIgnoreCase(System.getProperty("com.mysql.jdbc.testsuite.loadstoreperf.useBigResults"));
+        this.largeResults = "TRUE".equalsIgnoreCase(System.getProperty("com.mysql.mongo.jdbc.testsuite.loadstoreperf.useBigResults"));
 
         if ((newTableType != null) && (newTableType.length() > 0)) {
             this.tableType = newTableType;

@@ -40,9 +40,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.SocketFactory;
-import com.mysql.jdbc.StandardSocketFactory;
+import com.mysql.mongo.jdbc.NonRegisteringDriver;
+import com.mysql.mongo.jdbc.SocketFactory;
+import com.mysql.mongo.jdbc.StandardSocketFactory;
 
 /**
  * Configure "socketFactory" to use this class in your JDBC URL, and it will operate as normal, unless you map some host aliases to actual IP addresses, and

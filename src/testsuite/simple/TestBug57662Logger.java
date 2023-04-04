@@ -23,8 +23,8 @@
 
 package testsuite.simple;
 
-import com.mysql.jdbc.log.StandardLogger;
-import com.mysql.jdbc.profiler.ProfilerEvent;
+import com.mysql.mongo.jdbc.log.StandardLogger;
+import com.mysql.mongo.jdbc.profiler.ProfilerEvent;
 
 public class TestBug57662Logger extends StandardLogger {
 

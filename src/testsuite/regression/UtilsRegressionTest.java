@@ -29,10 +29,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.ExceptionInterceptor;
-import com.mysql.jdbc.SQLError;
-import com.mysql.jdbc.TimeUtil;
+import com.mysql.mongo.jdbc.Connection;
+import com.mysql.mongo.jdbc.ExceptionInterceptor;
+import com.mysql.mongo.jdbc.SQLError;
+import com.mysql.mongo.jdbc.TimeUtil;
 
 import testsuite.BaseTestCase;
 
@@ -72,7 +72,7 @@ public class UtilsRegressionTest extends BaseTestCase {
          * alternative Time Zone designations to Standard Time Zones ID (IANA/Olson database). This data was generated from IANA Time Zone database v. 2015f
          * (http://www.iana.org/time-zones) and Unicode CLDR v.28 (http://cldr.unicode.org/)
          * 
-         * Both the file com/mysql/jdbc/TimeZoneMapping.properties and the following data are generated from a MySQL Connector/J internal utility.
+         * Both the file com.mysql.mongo.jdbc/TimeZoneMapping.properties and the following data are generated from a MySQL Connector/J internal utility.
          */
 
         Map<String, String> tzMap = new HashMap<String, String>();

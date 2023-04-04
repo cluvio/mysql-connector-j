@@ -34,10 +34,10 @@ import javax.sql.ConnectionEventListener;
 import javax.sql.ConnectionPoolDataSource;
 import javax.sql.PooledConnection;
 
-import com.mysql.jdbc.PacketTooBigException;
-import com.mysql.jdbc.jdbc2.optional.ConnectionWrapper;
-import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
-import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
+import com.mysql.mongo.jdbc.PacketTooBigException;
+import com.mysql.mongo.jdbc.jdbc2.optional.ConnectionWrapper;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
+import com.mysql.mongo.jdbc.jdbc2.optional.MysqlXADataSource;
 
 import testsuite.BaseTestCase;
 
