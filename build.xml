@@ -638,21 +638,21 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                   value="javax.xml.datatype;org.hibernate;org.hibernate.cfg;org.hibernate.service;org.hibernate.service.jdbc.connections.spi;resolution:=optional" />
 
         <property name="driver-exports"
-                  value="com.mysql.jdbc;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.jdbc.log,javax.management,javax.naming,javax.net.ssl,javax.xml.parsers,javax.xml.stream,javax.xml.transform,javax.xml.transform.dom,javax.xml.transform.sax,javax.xml.transform.stax,javax.xml.transform.stream,org.xml.sax&quot;" />
+                  value="com.mysql.mongo.jdbc;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.mongo.jdbc.log,javax.management,javax.naming,javax.net.ssl,javax.xml.parsers,javax.xml.stream,javax.xml.transform,javax.xml.transform.dom,javax.xml.transform.sax,javax.xml.transform.stax,javax.xml.transform.stream,org.xml.sax&quot;" />
         <property name="jee-exports"
-                  value="com.mysql.jdbc.jdbc2.optional;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.jdbc,com.mysql.jdbc.log,javax.sql,javax.naming,javax.naming.spi,javax.transaction.xa&quot;" />
-        <property name="logging-exports" value="com.mysql.jdbc.log;version=&quot;${osgid-version}&quot;" />
-        <property name="profiling-exports" value="com.mysql.jdbc.profiler;version=&quot;${osgid-version}&quot;" />
-        <property name="util-exports" value="com.mysql.jdbc.util;version=&quot;${osgid-version}&quot;" />
-        <property name="exceptions-exports" value="com.mysql.jdbc.exceptions;version=&quot;${osgid-version}&quot;" />
+                  value="com.mysql.mongo.jdbc.jdbc2.optional;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.mongo.jdbc,com.mysql.mongo.jdbc.log,javax.sql,javax.naming,javax.naming.spi,javax.transaction.xa&quot;" />
+        <property name="logging-exports" value="com.mysql.mongo.jdbc.log;version=&quot;${osgid-version}&quot;" />
+        <property name="profiling-exports" value="com.mysql.mongo.jdbc.profiler;version=&quot;${osgid-version}&quot;" />
+        <property name="util-exports" value="com.mysql.mongo.jdbc.util;version=&quot;${osgid-version}&quot;" />
+        <property name="exceptions-exports" value="com.mysql.mongo.jdbc.exceptions;version=&quot;${osgid-version}&quot;" />
         <property name="jdbc4-exceptions-exports" value="com.mysql.mongo.jdbc.exceptions.jdbc4;version=&quot;${osgid-version}&quot;" />
-        <property name="interceptors-exports" value="com.mysql.jdbc.interceptors;version=&quot;${osgid-version}&quot;" />
+        <property name="interceptors-exports" value="com.mysql.mongo.jdbc.interceptors;version=&quot;${osgid-version}&quot;" />
         <property name="integration-exports"
-                  value="com.mysql.jdbc.integration.c3p0;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mchange.v2.c3p0&quot;,com.mysql.jdbc.integration.jboss;version=&quot;${osgid-version}&quot;;uses:=&quot;org.jboss.resource.adapter.jdbc,org.jboss.resource.adapter.jdbc.vendor&quot;" />
-        <property name="configs-exports" value="com.mysql.jdbc.configs;version=&quot;${osgid-version}&quot;" />
-        <property name="legacy-exports" value="org.gjt.mm.mysql.mongo;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.jdbc&quot;" />
+                  value="com.mysql.mongo.jdbc.integration.c3p0;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mchange.v2.c3p0&quot;,com.mysql.mongo.jdbc.integration.jboss;version=&quot;${osgid-version}&quot;;uses:=&quot;org.jboss.resource.adapter.jdbc,org.jboss.resource.adapter.jdbc.vendor&quot;" />
+        <property name="configs-exports" value="com.mysql.mongo.jdbc.configs;version=&quot;${osgid-version}&quot;" />
+        <property name="legacy-exports" value="org.gjt.mm.mysql.mongo;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.mongo.jdbc&quot;" />
         <property name="fabric-exports"
-                  value="com.mysql.fabric;com.mysql.fabric.hibernate;com.mysql.fabric.jdbc;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.jdbc,javax.xml.datatype;org.hibernate;org.hibernate.cfg;org.hibernate.service;org.hibernate.service.jdbc.connections.spi&quot;" />
+                  value="com.mysql.fabric;com.mysql.mongo.fabric.hibernate;com.mysql.fabric.jdbc;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mysql.mongo.jdbc,javax.xml.datatype;org.hibernate;org.hibernate.cfg;org.hibernate.service;org.hibernate.service.jdbc.connections.spi&quot;" />
 
         <manifest file="${buildDir}/${fullProdName}/META-INF/MANIFEST.MF">
             <attribute name="Built-By" value="${user.name}" />
@@ -670,7 +670,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <attribute name="Bundle-Version" value="${osgid-version}" />
             <attribute name="Bundle-Name" value="Oracle Corporation's JDBC Driver for MySQL" />
             <attribute name="Bundle-ManifestVersion" value="2" />
-            <attribute name="Bundle-SymbolicName" value="com.mysql.jdbc" />
+            <attribute name="Bundle-SymbolicName" value="com.mysql.mongo.jdbc" />
             <attribute name="Export-Package"
                        value="${driver-exports},${jee-exports},${logging-exports},${profiling-exports},${util-exports},${exceptions-exports},${jdbc4-exceptions-exports},${interceptors-exports},${integration-exports},${configs-exports},${legacy-exports},${fabric-exports}" />
             <attribute name="Import-Package"
@@ -1091,7 +1091,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             description="Generates properties table doc for the MySQL Connector/J docs web site."
             depends="compile-driver">
         <tempfile property="properties-xml" suffix=".xml" />
-        <java classname="com.mysql.jdbc.util.PropertiesDocGenerator" output="${properties-xml}" classpath="${buildDir}/${fullProdName}" />
+        <java classname="com.mysql.mongo.jdbc.util.PropertiesDocGenerator" output="${properties-xml}" classpath="${buildDir}/${fullProdName}" />
         <copy file="${properties-xml}" tofile="${buildDir}/${fullProdName}/docs/sources/connPropsToDocbook.xml" />
         <delete file="${properties-xml}" />
     </target>
@@ -1102,7 +1102,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             description="Generates error mapping table doc for the MySQL Connector/J docs web site."
             depends="compile-driver">
         <tempfile property="errorsMapping-xml" suffix=".xml" />
-        <java classname="com.mysql.jdbc.util.ErrorMappingsDocGenerator" output="${errorsMapping-xml}" classpath="${buildDir}/${fullProdName}" />
+        <java classname="com.mysql.mongo.jdbc.util.ErrorMappingsDocGenerator" output="${errorsMapping-xml}" classpath="${buildDir}/${fullProdName}" />
         <copy file="${errorsMapping-xml}" tofile="${buildDir}/${fullProdName}/docs/sources/errorMapToDocbook.xml" />
         <delete file="${errorsMapping-xml}" />
     </target>
@@ -1601,7 +1601,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
                 </condition>
             </fail>
 
-            <java fork="true" jvm="${jvm.java}" classname="com.mysql.jdbc.util.VersionFSHierarchyMaker">
+            <java fork="true" jvm="${jvm.java}" classname="com.mysql.mongo.jdbc.util.VersionFSHierarchyMaker">
                 <jvmarg value="-Xmx1024m" />
 
                 <sysproperty key="com.mysql.jdbc.testsuite.url" value="@{jdbcUrl}" />
