@@ -645,7 +645,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
         <property name="profiling-exports" value="com.mysql.jdbc.profiler;version=&quot;${osgid-version}&quot;" />
         <property name="util-exports" value="com.mysql.jdbc.util;version=&quot;${osgid-version}&quot;" />
         <property name="exceptions-exports" value="com.mysql.jdbc.exceptions;version=&quot;${osgid-version}&quot;" />
-        <property name="jdbc4-exceptions-exports" value="com.mysql.jdbc.exceptions.jdbc4;version=&quot;${osgid-version}&quot;" />
+        <property name="jdbc4-exceptions-exports" value="com.mysql.mongo.jdbc.exceptions.jdbc4;version=&quot;${osgid-version}&quot;" />
         <property name="interceptors-exports" value="com.mysql.jdbc.interceptors;version=&quot;${osgid-version}&quot;" />
         <property name="integration-exports"
                   value="com.mysql.jdbc.integration.c3p0;version=&quot;${osgid-version}&quot;;uses:=&quot;com.mchange.v2.c3p0&quot;,com.mysql.jdbc.integration.jboss;version=&quot;${osgid-version}&quot;;uses:=&quot;org.jboss.resource.adapter.jdbc,org.jboss.resource.adapter.jdbc.vendor&quot;" />
@@ -896,7 +896,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <include name="**/HibernateFabric.java" />
             <include name="**/JDBC4*.java" />
             <exclude name="**/JDBC42*.java" />
-            <include name="com/mysql/jdbc/mongo/exceptions/jdbc4/*" />
+            <include name="com/mysql/mongo/jdbc/exceptions/jdbc4/*" />
             <classpath refid="project.build.classpath" />
             <compilerarg line="${javac.compilerarg}" />
         </javac>
